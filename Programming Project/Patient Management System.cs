@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Programming_Project
 {
-    class Program
+    class Patient_Management_System
     {
         static void Main(string[] args)
         {
