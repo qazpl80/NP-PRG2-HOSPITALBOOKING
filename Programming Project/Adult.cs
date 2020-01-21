@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Programming_Project
 {
-	class Child:Patient
-	{
-        public double CdaBalance{ get; set; }
+    class Adult : Patient
+    {
+        public double medisaveBalance { get; set; }
 
-        public Child(string id, string n, int a, char g, string cs, string s, double cb) : base(id, n, a, g, cs, s)
+        public Adult(string id, string n, int a, char g, string cs, string s, double m) : base(id, n, a, g, cs, s)
         {
-            CdaBalance = cb;
+            medisaveBalance = m;
         }
         public override CalculateCharges()
         {
@@ -27,7 +27,7 @@ namespace Programming_Project
         }
         public override string ToString()
         {
-            return base.ToString() + "\tCdaBalance: " + CdaBalance;
+            return base.ToString() + "\tMedisave Balance : " + medisaveBalance;
         }
     }
 }
