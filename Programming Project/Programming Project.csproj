@@ -43,11 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adult.cs" />
+    <Compile Include="Bed.cs" />
+    <Compile Include="BedStay.cs" />
+    <Compile Include="Child.cs" />
+    <Compile Include="ClassABed.cs" />
+    <Compile Include="ClassBBed.cs" />
+    <Compile Include="ClassCBed.cs" />
+    <Compile Include="MedicalRecord.cs" />
+    <Compile Include="Patient Management System.cs" />
+    <Compile Include="Patient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Senior.cs" />
+    <Compile Include="Stay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="beds.csv" />
+    <None Include="patients%281%29.csv" />
+    <None Include="PRG2 Oct2019 Assignment Final.docx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
