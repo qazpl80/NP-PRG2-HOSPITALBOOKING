@@ -20,7 +20,25 @@ namespace Programming_Project
         {
             PortableTv = pt;
         }
-        public override double CalculateCharges(string cs, int nos) { }
+        public override double CalculateCharges(string cs, int nos) 
+        {
+            if (cs == "SC")
+            {
+                return DailyRate * 80 / 100 * nos;
+            }
+            else if (cs == "PR")
+            {
+                return DailyRate * 60 / 100 * nos;
+            }
+            else if (cs == "Foreigner")
+            {
+                return DailyRate * nos;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         public override string ToString()
         {
             return base.ToString() + "\tPortableTv: " + PortableTv;

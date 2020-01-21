@@ -21,9 +21,9 @@ namespace Programming_Project
         {
             CdaBalance = cb;
         }
-        public override CalculateCharges()
+        public override double CalculateCharges()
         {
-            //To be filled in
+            return Bed
         }
         public override string ToString()
         {

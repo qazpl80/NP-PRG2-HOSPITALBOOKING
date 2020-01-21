@@ -21,7 +21,25 @@ namespace Programming_Project
         {
             AirCon = ac;
         }
-        public override double CalculateCharges(string cs, int nos) { }
+        public override double CalculateCharges(string cs, int nos) 
+        {
+            if (cs == "SC")
+            {
+                return DailyRate * 70 / 100 * nos;
+            }
+            else if (cs == "PR")
+            {
+                return DailyRate * 40 / 100 * nos;
+            }
+            else if (cs == "Foreigner")
+            {
+                return DailyRate * nos;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         public override string ToString()
         {
             return base.ToString() + "\tAirCon: " + AirCon;

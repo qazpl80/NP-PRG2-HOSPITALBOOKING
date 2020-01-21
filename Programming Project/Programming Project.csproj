@@ -61,7 +61,6 @@
     <None Include="App.config" />
     <None Include="beds.csv" />
     <None Include="patients%281%29.csv" />
-    <None Include="PRG2 Oct2019 Assignment Final.docx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

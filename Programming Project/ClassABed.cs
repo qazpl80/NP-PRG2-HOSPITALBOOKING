@@ -20,7 +20,10 @@ namespace Programming_Project
         {
             AccompanyingPerson = ap;
         }
-        public override double CalculateCharges(string cs, int nos) { }
+        public override double CalculateCharges(string cs, int nos) 
+        {
+            return DailyRate * nos;
+        }
         public override string ToString()
         {
             return base.ToString() + "\tAccompanyingPerson: " + AccompanyingPerson;

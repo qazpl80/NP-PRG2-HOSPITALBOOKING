@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Programming_Project
 {
-    class Patient
+    abstract class Patient
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Programming_Project
         public char Gender { get; set; }
         public string CitizenStatus { get; set; }
         public string Status { get; set; }
-        public stay Stay { get; set; }
+        public Stay Stay { get; set; }
 
         public Patient(string id, string na, int ag, char gd, string ctz, string sts)
         {
@@ -30,7 +30,7 @@ namespace Programming_Project
             CitizenStatus = ctz;
             Status = sts;
         }
-        public double CalculateCharges() { }
+        public abstract double CalculateCharges();
         public override string ToString()
         {
             return "ID: " + Id
