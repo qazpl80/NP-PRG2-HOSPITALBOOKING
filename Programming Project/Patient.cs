@@ -32,7 +32,7 @@ namespace Programming_Project
         }
         public double CalculateCharges()
         {
-            // to be filled
+            return Stay.BedstayList;
         }
         public override string ToString()
         {
