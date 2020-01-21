@@ -23,7 +23,7 @@ namespace Programming_Project
         }
         public override CalculateCharges()
         {
-            //To be filled in
+            return base.CalculateCharges() - medisaveBalance;
         }
         public override string ToString()
         {

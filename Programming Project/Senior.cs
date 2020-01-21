@@ -18,7 +18,7 @@ namespace Programming_Project
         public Senior(string id, string n, int a, char g, string cs, string s) : base(id, n, a, g, cs, s) { }
         public override double CalculateCharges()
         {
-            //To be filled in
+            return base.CalculateCharges / 2;
         }
         public override string ToString()
         {

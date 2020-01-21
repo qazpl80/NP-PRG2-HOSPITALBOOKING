@@ -30,7 +30,10 @@ namespace Programming_Project
             CitizenStatus = cs;
             Status = s;
         }
-        public abstract double CalculateCharges();
+        public double CalculateCharges()
+        {
+            // to be filled
+        }
         public override string ToString()
         {
             return "ID: " + Id
