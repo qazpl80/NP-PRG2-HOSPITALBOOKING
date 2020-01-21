@@ -21,14 +21,14 @@ namespace Programming_Project
         public string Status { get; set; }
         public Stay Stay { get; set; }
 
-        public Patient(string id, string na, int ag, char gd, string ctz, string sts)
+        public Patient(string id, string n, int a, char g, string cs, string s)
         {
             Id = id;
-            Name = na;
-            Age = ag;
-            Gender = gd;
-            CitizenStatus = ctz;
-            Status = sts;
+            Name = n;
+            Age = a;
+            Gender = g;
+            CitizenStatus = cs;
+            Status = s;
         }
         public abstract double CalculateCharges();
         public override string ToString()

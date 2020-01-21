@@ -23,7 +23,7 @@ namespace Programming_Project
         }
         public override double CalculateCharges()
         {
-            return Bed
+            return
         }
         public override string ToString()
         {
