@@ -20,9 +20,9 @@ namespace Programming_Project
         {
             AccompanyingPerson = ap;
         }
-        public override double CalculateCharges(string cs, int nos) 
+        public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
-            return DailyRate * nos;
+            return DailyRate * noOfDays;
         }
         public override string ToString()
         {

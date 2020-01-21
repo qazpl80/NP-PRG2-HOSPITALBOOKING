@@ -20,19 +20,19 @@ namespace Programming_Project
         {
             PortableTv = pt;
         }
-        public override double CalculateCharges(string cs, int nos) 
+        public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
-            if (cs == "SC")
+            if (citizenStatus == "SC")
             {
-                return DailyRate * 80 / 100 * nos;
+                return DailyRate * 80 / 100 * noOfDays;
             }
-            else if (cs == "PR")
+            else if (citizenStatus == "PR")
             {
-                return DailyRate * 60 / 100 * nos;
+                return DailyRate * 60 / 100 * noOfDays;
             }
-            else if (cs == "Foreigner")
+            else if (citizenStatus == "Foreigner")
             {
-                return DailyRate * nos;
+                return DailyRate * noOfDays;
             }
             else
             {

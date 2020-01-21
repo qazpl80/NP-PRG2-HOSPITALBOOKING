@@ -21,19 +21,19 @@ namespace Programming_Project
         {
             AirCon = ac;
         }
-        public override double CalculateCharges(string cs, int nos) 
+        public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
-            if (cs == "SC")
+            if (citizenStatus == "SC")
             {
-                return DailyRate * 70 / 100 * nos;
+                return DailyRate * 70 / 100 * noOfDays;
             }
-            else if (cs == "PR")
+            else if (citizenStatus == "PR")
             {
-                return DailyRate * 40 / 100 * nos;
+                return DailyRate * 40 / 100 * noOfDays;
             }
-            else if (cs == "Foreigner")
+            else if (citizenStatus == "Foreigner")
             {
-                return DailyRate * nos;
+                return DailyRate * noOfDays;
             }
             else
             {
