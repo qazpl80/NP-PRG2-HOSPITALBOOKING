@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Programming_Project
 {
-	class BedStay:Bed
+	class BedStay
 	{
         public DateTime StartBedstay { get; set; }
         public DateTime EndBedstay { get; set; }
@@ -26,10 +26,8 @@ namespace Programming_Project
         public override string ToString()
         {
             return base.ToString() +
-                "\tStartBedstay: "
-                + StartBedstay +
-                "\tEndBedstay: "
-                + EndBedstay
+                "\tStartBedstay: " + StartBedstay +
+                "\tEndBedstay: " + EndBedstay
                 + Bed;
         }
 

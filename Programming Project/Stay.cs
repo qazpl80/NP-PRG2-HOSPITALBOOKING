@@ -38,12 +38,9 @@ namespace Programming_Project
         }
         public override string ToString()
         {
-            return "AdmittedDate: "
-                + AdmittedDate +
-                "\tDischargedDate: "
-                + DischargedDate +
-                "\tAdmittedBy: " +
-                AdmittedBy +
+            return "AdmittedDate: " + AdmittedDate +
+                "\tDischargedDate: " + DischargedDate +
+                "\tAdmittedBy: " + AdmittedBy +
                 Patient;
         }
     }
