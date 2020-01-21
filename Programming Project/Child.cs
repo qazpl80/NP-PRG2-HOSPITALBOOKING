@@ -23,7 +23,7 @@ namespace Programming_Project
         }
         public override double CalculateCharges()
         {
-            return
+            return base.CalculateCharges() - CdaBalance;
         }
         public override string ToString()
         {
