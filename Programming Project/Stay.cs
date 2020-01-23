@@ -14,14 +14,14 @@ namespace Programming_Project
     class Stay
 	{
         public DateTime AdmittedDate { get; set; }  
-        public DateTime DischargedDate { get; set; }
+        public DateTime? DischargedDate { get; set; }
         public string AdmittedBy { get; set; }
         public bool IsPaid { get; set; }
         public List<MedicalRecord> MedicalRecordList { get; set; } = new List<MedicalRecord>();
         public List<BedStay> BedstayList { get; set; } = new List<BedStay>();
         public Patient Patient { get; set; }
 
-        public Stay(DateTime ad , DateTime dd, string ab, Patient p)
+        public Stay(DateTime ad , DateTime? dd, string ab, Patient p)
         {
             AdmittedDate = ad;
             DischargedDate = dd;

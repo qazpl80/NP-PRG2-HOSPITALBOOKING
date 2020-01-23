@@ -32,7 +32,13 @@ namespace Programming_Project
         }
         public double CalculateCharges()
         {
-            return Stay.BedstayList;
+            for (int i; i < Stay.BedstayList.Count; i++)
+            {
+                DateTime admission = Stay.BedstayList[i].StartBedstay;
+                DateTime? discharge = Stay.BedstayList[i].EndBedstay;
+                int daysin = Convert.ToInt32(discharge) - Convert.ToInt32(admission);
+                return daysin * 
+            }
         }
         public override string ToString()
         {

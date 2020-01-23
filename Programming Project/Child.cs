@@ -21,7 +21,8 @@ namespace Programming_Project
         {
             CdaBalance = cb;
         }
-        public override double CalculateCharges()
+
+        public new double CalculateCharges()
         {
             return base.CalculateCharges() - CdaBalance;
         }

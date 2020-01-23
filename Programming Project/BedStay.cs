@@ -14,10 +14,10 @@ namespace Programming_Project
 	class BedStay
 	{
         public DateTime StartBedstay { get; set; }
-        public DateTime EndBedstay { get; set; }
+        public DateTime? EndBedstay { get; set; }
         public  Bed Bed { get; set; }
 
-        public BedStay(DateTime sbs, DateTime ebs, Bed b)
+        public BedStay(DateTime sbs, DateTime? ebs, Bed b)
         {
             StartBedstay = sbs;
             EndBedstay = ebs;
