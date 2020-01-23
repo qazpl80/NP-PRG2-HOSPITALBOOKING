@@ -16,8 +16,64 @@ namespace Programming_Project
     {
         static void Main(string[] args)
         {
-            
+            DisplayMenu();
+            Console.WriteLine("Enter your option: ");
+            int i = Console.Read();
+            while (i != 0)
+            {
+                if (i == 1)
+                {
 
+                }
+                if (i == 2)
+                {
+
+                }
+                if (i == 3)
+                {
+
+                }
+                if (i == 4)
+                {
+
+                }
+                if (i == 5)
+                {
+
+                }
+                if (i == 6)
+                {
+
+                }
+                if (i == 7)
+                {
+
+                }
+                if (i == 8)
+                {
+
+                }
+                if (i == 9)
+                {
+
+                }
+                if (i == 10)
+                {
+
+                }
+                if (i == 11)
+                {
+
+                }
+                if (i == 12)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
         }
         static void DisplayMenu()
         {
