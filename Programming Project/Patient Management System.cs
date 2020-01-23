@@ -17,8 +17,8 @@ namespace Programming_Project
         static void Main(string[] args)
         {
             DisplayMenu();
-            Console.WriteLine("Enter your option: ");
-            int i = Console.Read();
+            Console.Write("Enter your option: ");
+            int i = Convert.ToInt32(Console.ReadLine());
             while (i != 0)
             {
                 if (i == 1)
