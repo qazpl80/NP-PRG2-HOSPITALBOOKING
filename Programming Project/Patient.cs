@@ -32,14 +32,17 @@ namespace Programming_Project
         }
         public double CalculateCharges()
         {
+            int daysin = 0;
             foreach (BedStay bs in Stay.BedstayList)
             {
+               
                 DateTime admission = bs.StartBedstay;
                 DateTime? discharge = bs.EndBedstay.GetValueOrDefault();
-                int daysin = Convert.ToInt32(discharge - admission);
-                return
+                daysin = Convert.ToInt32(discharge - admission);
+                
             }
-            
+            return daysin;
+
         }
         public override string ToString()
         {
