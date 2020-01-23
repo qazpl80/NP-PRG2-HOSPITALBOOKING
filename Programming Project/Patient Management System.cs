@@ -23,51 +23,51 @@ namespace Programming_Project
             {
                 if (i == 1)
                 {
-
+                    Console.WriteLine("Option 1. View All Patients");
                 }
                 if (i == 2)
                 {
-
+                    Console.WriteLine("Option 2. View All Beds");
                 }
                 if (i == 3)
                 {
-
+                    Console.WriteLine("Option 3. Register Patient");
                 }
                 if (i == 4)
                 {
-
+                    Console.WriteLine("Option 4. Add new bed");
                 }
                 if (i == 5)
                 {
-
+                    Console.WriteLine("Option 5. Register hospital stay");
                 }
                 if (i == 6)
                 {
-
+                    Console.WriteLine("Option 6. Retrieve Patient");
                 }
                 if (i == 7)
                 {
-
+                    Console.WriteLine("Option 7. Add Medical Record Entry");
                 }
                 if (i == 8)
                 {
-
+                    Console.WriteLine("Option 8. View medical records");
                 }
                 if (i == 9)
                 {
-
+                    Console.WriteLine("Option 9.Transfer Patient to Another Bed");
                 }
                 if (i == 10)
                 {
-
+                    Console.WriteLine("Option 10. Discharge and payment");
                 }
                 if (i == 11)
                 {
-
+                    Console.WriteLine("Option 11. Display currencies exchange rate");
                 }
                 if (i == 12)
                 {
-
+                    Console.WriteLine("Option 12. Display PM 2.5 information");
                 }
                 else
                 {
