@@ -22,7 +22,15 @@ namespace Programming_Project
         }
         public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
-            return DailyRate * noOfDays;
+            double charge;
+            if (AccompanyingPerson == true)
+            {
+                charge = 100 * noOfDays;
+            }
+            else
+                charge = 0;
+            double Total = DailyRate + charge;
+            return Total;
         }
         public override string ToString()
         {

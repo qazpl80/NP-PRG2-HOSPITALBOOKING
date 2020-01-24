@@ -22,22 +22,33 @@ namespace Programming_Project
         }
         public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
+            int cost;
+            double Total;
+            if(PortableTv == true)
+            {
+                cost = 30;
+            }
+            else
+            {
+                cost = 0;
+            }
             if (citizenStatus == "SC")
             {
-                return DailyRate * 80 / 100 * noOfDays;
+                Total = cost +( DailyRate * 80 / 100 * noOfDays);
             }
             else if (citizenStatus == "PR")
             {
-                return DailyRate * 60 / 100 * noOfDays;
+                Total = cost + ( DailyRate * 60 / 100 * noOfDays);
             }
             else if (citizenStatus == "Foreigner")
             {
-                return DailyRate * noOfDays;
+                Total = cost + (DailyRate * noOfDays); ;
             }
             else
             {
                 return 0;
             }
+            return Total;
         }
         public override string ToString()
         {

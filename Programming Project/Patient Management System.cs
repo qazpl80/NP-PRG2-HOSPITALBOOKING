@@ -24,6 +24,7 @@ namespace Programming_Project
                 if (i == 1)
                 {
                     Console.WriteLine("Option 1. View All Patients");
+                   
                 }
                 if (i == 2)
                 {

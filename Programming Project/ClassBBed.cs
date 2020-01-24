@@ -23,22 +23,48 @@ namespace Programming_Project
         }
         public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
-            if (citizenStatus == "SC")
+            double charges;
+            double weeks = noOfDays / 7;
+            double Total;
+
+            if (AirCon == false)
             {
-                return DailyRate * 70 / 100 * noOfDays;
+                charges = 50 * Math.Round(weeks, 0);
             }
-            else if (citizenStatus == "PR")
+            else if(AirCon == true)
             {
-                return DailyRate * 40 / 100 * noOfDays;
-            }
-            else if (citizenStatus == "Foreigner")
-            {
-                return DailyRate * noOfDays;
+                if(noOfDays == 8)
+                {
+                    charges = 100;
+                }
+                else
+                {
+                    charges = 0;
+                }
             }
             else
             {
-                return 0;
+                charges = 0;
             }
+
+            if (citizenStatus == "SC")
+            {
+                Total = charges + (DailyRate * 0.7 * noOfDays);
+                
+            }
+            else if (citizenStatus == "PR")
+            {
+                Total = charges * (DailyRate * 0.4 * noOfDays);
+            }
+            else if (citizenStatus == "Foreigner")
+            {
+                Total = charges * (DailyRate * noOfDays);
+            }
+            else
+            {
+                Total = 0;
+            }
+            return Total;
         }
         public override string ToString()
         {
