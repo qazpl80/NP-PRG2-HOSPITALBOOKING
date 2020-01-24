@@ -16,7 +16,7 @@ namespace Programming_Project
     class Senior : Patient
     {
         public Senior(string id, string n, int a, char g, string cs, string s) : base(id, n, a, g, cs, s) { }
-        public override double CalculateCharges()
+        public new double CalculateCharges()
         {
             return base.CalculateCharges() / 2;
         }

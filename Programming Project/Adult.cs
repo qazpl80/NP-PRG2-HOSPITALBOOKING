@@ -21,7 +21,7 @@ namespace Programming_Project
         {
             medisaveBalance = m;
         }
-        public override CalculateCharges()
+        public new double CalculateCharges()
         {
             return base.CalculateCharges() - medisaveBalance;
         }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Programming Project", "Prog
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{367F7C1C-31A4-472D-B391-F4173C5D2350}"
 	ProjectSection(SolutionItems) = preProject
+		..\beds.csv = ..\beds.csv
+		..\patients(1).csv = ..\patients(1).csv
 		PRG2 Oct2019 Assignment Final v2.docx = PRG2 Oct2019 Assignment Final v2.docx
 	EndProjectSection
 EndProject
