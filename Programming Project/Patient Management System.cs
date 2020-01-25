@@ -43,6 +43,7 @@ namespace Programming_Project
                 else if (i.Equals("3"))
                 {
                     Console.WriteLine("Option 3. Register Patient");
+                    RegisterPatient(patientsList);
 
                 }
                 else if (i.Equals("4"))
@@ -165,39 +166,97 @@ namespace Programming_Project
 
             
         }
-        static Patient RegisterPatient()
+        static void RegisterPatient(List<Patient> pList)
         {
+            
+            string patientdeets;
             Console.Write("Enter Name: ");
+           
             string name = Console.ReadLine();
+           
             Console.Write("Enter Identification Number: ");
             string Idn = Console.ReadLine();
             Console.Write("Enter Age: ");
-            int age = Convert.ToInt32(Console.ReadLine());
+            int age = 0;
+            try
+            {
+               age = Convert.ToInt32(Console.ReadLine());
+            }
+            catch
+            {
+                return age 
+            }
+            
             Console.Write("Enter Gender [M/F]: ");
             char gender = Convert.ToChar(Console.ReadLine().ToUpper());
             Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
             string citizenship = Console.ReadLine();
+            using (StreamWriter file = new StreamWriter("patients(1).csv",true))
+            {
+                if (age <= 12)
+                {
+                    //if child is sc create patient child object with cdabalance
+                    if (citizenship == "SC")
+                    {
+                        Console.Write("Enter Child Development Account Balance: ");
+                        double balance = Convert.ToDouble(Console.ReadLine());
+                        Patient c1 = new Child(Idn, name, age, gender, citizenship, "Registered", balance);
+                        pList.Add(c1);
+                       patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + balance;
+                       
+                    }
+                    //if child is not SC , no cdabalance
+                    else
+                    {
+                        Patient c1 = new Child(Idn, name, age, gender, citizenship, "Registered", 0);
+                        pList.Add(c1);
+                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
+                       
+                    }
+                }
+                else if (age < 64)
+                {
+                    if (citizenship == "SC" || citizenship == "PR")
+                    {
+                        Console.Write("Enter Medisave Balance: ");
+                        double medisave = Convert.ToDouble(Console.ReadLine());
+                        Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", medisave);
+                        pList.Add(a1);
+                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + medisave;
+                        
 
-            if(age <= 12)
-            {
-                if (citizenship == "SC")
-                {
-                    Console.Write("Enter Child Development Account Balance: ");
-                    double balance = Convert.ToDouble(Console.ReadLine());
+
+                    }
+                    else
+                    {
+                        Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", 0);
+                        pList.Add(a1);
+
+
+                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
+                        
+                    }
+
+
                 }
                 else
-                    return null;
-            }
-            if(age<64)
-            {
-                if (citizenship == "SC" || citizenship == "PR")
                 {
-                    Console.Write("Enter Medisave Balance: ");
-                    double medisave = Convert.ToDouble(Console.ReadLine());
+                    Patient s1 = new Senior(Idn, name, age, gender, citizenship, "Registered");
+                    pList.Add(s1);
+
+
+                    patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
+                    
                 }
-                else
-                    return null;
+                file.WriteLine(patientdeets);
+                Console.WriteLine("{0} is registered successfully", name);
+                
             }
+            
+
+
+            
+
 
         }
     }
