@@ -121,6 +121,18 @@ namespace Programming_Project
             Console.WriteLine("0. Exit");
             Console.WriteLine("\n");
         }
+
+        //Display Bedlist
+        static void DisplayBeds(List<Bed> bedslist)
+        {
+
+            Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}", "Type", "Ward No", "Bed No", "Availability", "Daily Rate");
+            foreach (Bed b in bedslist)
+            {
+                Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}", b.GetType(), b.WardNo, b.BedNo, b.Available, b.DailyRate);
+            }
+        }
+
         //Intialize data
         static void InitDate(List<Patient> pList, List<Bed>bList)
         {
@@ -129,19 +141,12 @@ namespace Programming_Project
         //display patients
         static void DisplayPatients(List<Patient> pList)
         {
-
             //read lines from patients.csv
-           
-
-
-
             Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
-            foreach(Patient p in pList)
+            foreach (Patient p in pList)
             {
                 Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", p.Name, p.Id, p.Age, p.Gender, p.CitizenStatus, p.Status);
             }
-
-            
         }
         //InIt List
         static void InitData(List<Patient> pList, List<Bed>bList)
