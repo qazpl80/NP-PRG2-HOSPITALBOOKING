@@ -24,7 +24,8 @@ namespace Programming_Project
             //Create list to store beds
             List<Bed> bedsList = new List<Bed>();
             InitData(patientsList, bedsList);
-
+            //create object for medical record
+            List<Stay> stayList = new List<Stay>();
 
             string i = "1";
 
@@ -37,8 +38,6 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 1. View All Patients");
                     DisplayPatients(patientsList);
-              
-
                 }
                 else if (i.Equals("2"))
                 {
@@ -76,10 +75,59 @@ namespace Programming_Project
                 else if (i.Equals("7"))
                 {
                     Console.WriteLine("Option 7. Add Medical Record Entry");
+                    DisplayPatients(patientsList);
+                    Console.Write("Enter patient ID number: ");
+                    string pid = Console.ReadLine();
+                    Console.Write("\n Patient temperature: ");
+                    double ptm = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Please enter patient observation: ");
+                    string pob = Console.ReadLine();
+
+                    foreach (Patient p in patientsList)
+                    {
+                        if (p.Id == pid)
+                        {
+                            MedicalRecord mr = new MedicalRecord(pob,ptm,DateTime.Now);
+                            p.Stay.AddMedicalRecord(mr);
+                            Console.WriteLine("Medical record entry successfully added.");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error, Patient not found, please try again");
+                            break;
+                        }
+                    }
                 }
                 else if (i.Equals("8"))
                 {
                     Console.WriteLine("Option 8. View medical records");
+                    DisplayPatients(patientsList);
+                    Console.Write("Enter patient ID number: ");
+                    string pid = Console.ReadLine();
+                    foreach (Patient p in patientsList)
+                    {
+                        if (p.Id == pid)
+                        {
+                            Console.WriteLine("Name of patient: {0}", p.Name);
+                            Console.WriteLine("ID number: {0}", p.Id);
+                            Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+                            Console.WriteLine("Gender: {0}", p.Gender);
+                            Console.WriteLine("Status: {0}", p.Status);
+                            Console.WriteLine("\n======Stay======");
+                            Console.WriteLine("Admission Date: {0}",/*p.Stay.AdmittedDate*/DateTime.Now);
+                            Console.WriteLine("Admission Date: {0}", /*p.Stay.DischargedDate*/DateTime.Now);
+                            Console.WriteLine("\n======Record # 1======");
+                            Console.WriteLine("Temperature: ", stayList[1]);
+                            Console.WriteLine("Temperature: ", stayList[0]);
+                            Console.WriteLine("Diagnosis: ", stayList[2]);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error, Patient not found, please try again");
+                            break;
+                        }
+                    }
                 }
                 else if (i.Equals("9"))
                 {
