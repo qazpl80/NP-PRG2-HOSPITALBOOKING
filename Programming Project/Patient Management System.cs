@@ -36,8 +36,6 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 1. View All Patients");
                     DisplayPatients(patientsList);
-              
-
                 }
                 else if (i.Equals("2"))
                 {
@@ -47,7 +45,6 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 3. Register Patient");
                     RegisterPatient(patientsList);
-
                 }
                 else if (i.Equals("4"))
                 {
@@ -122,6 +119,35 @@ namespace Programming_Project
             foreach (Bed b in bedslist)
             {
                 Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}", b.GetType(), b.WardNo, b.BedNo, b.Available, b.DailyRate);
+            }
+        }
+
+        static void AddNewBed(List<Bed> bedsList)
+        {
+            Console.Write("Enter Ward Type [A/B/C]: ");
+            string wt = Console.ReadLine();
+            Console.Write("Enter Ward No.: ");
+            string wn = Console.ReadLine();
+            Console.Write("Enter Bed No.: ");
+            string bn = Console.ReadLine();
+            Console.Write("Enter Daily Rate: $");
+            string dr = Console.ReadLine();
+            Console.Write("Enter Avaliable [Y/N]: ");
+            string av = Console.ReadLine();
+            if (wt == "A")
+            {
+                Bed cab = new ClassABed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                bList.Add(cab);
+            }
+            else if (wt == "B")
+            {
+                Bed cbb = new ClassBBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                bList.Add(cbb);
+            }
+            else if (wt == "C")
+            {
+                Bed ccb = new ClassCBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                bList.Add(ccb);
             }
         }
 
