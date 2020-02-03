@@ -19,10 +19,9 @@ namespace Programming_Project
         {
             //create list to store patients
             List<Patient> patientsList = new List<Patient>();
-           
+            //create list to store registered/ discharged
+            List<Patient> nonadmittedList = new List<Patient>();
             //Create list to store beds
-            List<Bed> bedsList = new List<Bed>();
-            InitData(patientsList,bedsList);
 
 
             string i = "1";
@@ -36,6 +35,8 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 1. View All Patients");
                     DisplayPatients(patientsList);
+              
+
                 }
                 else if (i.Equals("2"))
                 {
@@ -45,6 +46,7 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 3. Register Patient");
                     RegisterPatient(patientsList);
+
                 }
                 else if (i.Equals("4"))
                 {
@@ -53,7 +55,15 @@ namespace Programming_Project
                 else if (i.Equals("5"))
                 {
                     Console.WriteLine("Option 5. Register hospital stay");
-                    
+                    foreach (Patient p in patientsList)
+                    {
+
+                        if (p.Status != "admitted")
+                        {
+                            nonadmittedList.Add(p);
+                        }
+                    }
+                    DisplayPatients(nonadmittedList);
                 }
                 else if (i.Equals("6"))
                 {
@@ -119,35 +129,6 @@ namespace Programming_Project
             foreach (Bed b in bedslist)
             {
                 Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}", b.GetType(), b.WardNo, b.BedNo, b.Available, b.DailyRate);
-            }
-        }
-
-        static void AddNewBed(List<Bed> bedsList)
-        {
-            Console.Write("Enter Ward Type [A/B/C]: ");
-            string wt = Console.ReadLine();
-            Console.Write("Enter Ward No.: ");
-            string wn = Console.ReadLine();
-            Console.Write("Enter Bed No.: ");
-            string bn = Console.ReadLine();
-            Console.Write("Enter Daily Rate: $");
-            string dr = Console.ReadLine();
-            Console.Write("Enter Avaliable [Y/N]: ");
-            string av = Console.ReadLine();
-            if (wt == "A")
-            {
-                Bed cab = new ClassABed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
-                bList.Add(cab);
-            }
-            else if (wt == "B")
-            {
-                Bed cbb = new ClassBBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
-                bList.Add(cbb);
-            }
-            else if (wt == "C")
-            {
-                Bed ccb = new ClassCBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
-                bList.Add(ccb);
             }
         }
 
@@ -299,61 +280,22 @@ namespace Programming_Project
                 Console.WriteLine("{0} is not registered successfully",name);
             }
         }
-        static Patient retrievePatient(List<Patient> pList, string Patientid)
-        {
-            foreach (Patient p in pList)
-            {
-                if (p.Id == Patientid)
-                {
-                    return p;
-                }
-                
-                
-            }
-            Console.WriteLine("Patient does not exist, please enter the correct patient number.");
-            return null;
-            
-        }
-        static Bed retrieveBed(List<Bed> bList, int No)
-        {
-            foreach (Bed b in bList)
-            {   
-                if (b.count == No)
-                {
-                    return b;
-                }
-
-
-            }
-            Console.WriteLine("Bed does not exist, please enter the correct bed number.");
-            return null;
-
-        }
-        static void RegisterHospitalStay(List<Patient>pList , List<Bed>bList){
+        static void RegisterHospitalStay(List<Patient>nList , List<Bed>bList){
             Console.Write("Enter patient ID number: ");
             string Patientid = Console.ReadLine();
+            
+            
 
-            foreach (Patient p in pList)
-            {
+                // loop through the list and see if there a match
+            foreach (Patient p in nList)
+             {
+                    if (p.Id == Patientid)
+                    {
+                        return Patient p;
+                    }
 
-                if (p.Status != "admitted")
-                {
-                    pList.Remove(p);
-                }
-            }
-            DisplayPatients(pList);
-            foreach (Bed b in bList)
-            {
-                if (b.Available == true)
-                {
-                    bList.Remove(b);
-                }
-                DisplayBeds(bList);
-            }
-
-            // loop through the list and see if there a match
-
-            retrievePatient(pList, Patientid);
+             }
+                
 
             
 
