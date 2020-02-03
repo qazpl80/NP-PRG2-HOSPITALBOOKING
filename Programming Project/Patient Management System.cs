@@ -130,47 +130,7 @@ namespace Programming_Project
         {
 
             //read lines from patients.csv
-            string[] lines = File.ReadAllLines("patients(1).csv");
-
-            for (int l = 1; l < lines.Length; l++)
-            {
-                string[] info = lines[l].Split(',');
-                if (Convert.ToInt32(info[2]) <= 12)
-                {
-                    if (info[4] =="SC")
-                    {
-
-                        Patient child = new Child(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered", Convert.ToDouble(info[5]));
-                        pList.Add(child);
-                    }
-                    else
-                    {
-                        Patient child = new Child(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered",0);
-                        pList.Add(child);
-                    }
-                }
-                else if (Convert.ToInt32(info[2]) < 64)
-                {
-                    if (info[4] == "SC" || info[4] == "PR")
-                    {
-                        Patient adult = new Adult(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered",Convert.ToDouble(info[5]));
-                        pList.Add(adult);
-                    }
-                    else
-                    {
-                        Patient adult = new Adult(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered",0);
-                        pList.Add(adult);
-                    }
-                        
-                }
-                else
-                {
-                    Senior senior = new Senior(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4],"Registered");
-                    pList.Add(senior);
-                }
-
-            }
-
+           
 
 
 
@@ -181,6 +141,52 @@ namespace Programming_Project
             }
 
             
+        }
+        //InIt List
+        static void InitData(List<Patient> pList, List<Bed>bList)
+        {
+            // read csv lines from patients
+            string[] lines = File.ReadAllLines("patients(1).csv");
+
+            for (int l = 1; l < lines.Length; l++)
+            {
+                string[] info = lines[l].Split(',');
+                if (Convert.ToInt32(info[2]) <= 12)
+                {
+                    if (info[4] == "SC")
+                    {
+
+                        Patient child = new Child(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered", Convert.ToDouble(info[5]));
+                        pList.Add(child);
+                    }
+                    else
+                    {
+                        Patient child = new Child(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered", 0);
+                        pList.Add(child);
+                    }
+                }
+                else if (Convert.ToInt32(info[2]) < 64)
+                {
+                    if (info[4] == "SC" || info[4] == "PR")
+                    {
+                        Patient adult = new Adult(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered", Convert.ToDouble(info[5]));
+                        pList.Add(adult);
+                    }
+                    else
+                    {
+                        Patient adult = new Adult(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered", 0);
+                        pList.Add(adult);
+                    }
+
+                }
+                else
+                {
+                    Senior senior = new Senior(info[1], info[0], Convert.ToInt32(info[2]), Convert.ToChar(info[3]), info[4], "Registered");
+                    pList.Add(senior);
+                }
+
+            }
+
         }
         static void RegisterPatient(List<Patient> pList)
         {
