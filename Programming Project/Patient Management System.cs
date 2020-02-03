@@ -22,6 +22,7 @@ namespace Programming_Project
             //create list to store registered/ discharged
             List<Patient> nonadmittedList = new List<Patient>();
             //Create list to store beds
+            InitData(patientsList,bedList);
 
 
             string i = "1";
@@ -275,7 +276,7 @@ namespace Programming_Project
                 Console.WriteLine("{0} is not registered successfully",name);
             }
         }
-        static void RegisterHospitalStay(List<Patient>nList , List<Bed>bList){
+        static BedStay RegisterHospitalStay(List<Patient>nList , List<Bed>bList){
             Console.Write("Enter patient ID number: ");
             string Patientid = Console.ReadLine();
             
@@ -286,7 +287,7 @@ namespace Programming_Project
              {
                     if (p.Id == Patientid)
                     {
-                        return Patient p;
+                        return  p;
                     }
 
              }
