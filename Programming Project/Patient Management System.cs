@@ -22,6 +22,8 @@ namespace Programming_Project
             //create list to store registered/ discharged
             List<Patient> nonadmittedList = new List<Patient>();
             //Create list to store beds
+            List<Bed> bedsList = new List<Bed>();
+            InitData(patientsList, bedsList);
 
 
             string i = "1";
@@ -317,22 +319,56 @@ namespace Programming_Project
                 Console.WriteLine("{0} is not registered successfully",name);
             }
         }
-        static void RegisterHospitalStay(List<Patient>nList , List<Bed>bList){
+                static Patient retrievePatient(List<Patient> pList, string Patientid)
+        {
+            foreach (Patient p in pList)
+            {
+                if (p.Id == Patientid)
+                {
+                    return p;
+                }
+                
+                
+            }
+            Console.WriteLine("Patient does not exist, please enter the correct patient number.");
+            return null;
+            
+        }
+        static Bed retrieveBed(List<Bed> bList, int No)
+        {
+            Console.Write("Select bed to stay");
+            string numb = Console.ReadLine();
+            
+        }
+            Console.WriteLine("Bed does not exist, please enter the correct bed number.");
+            return null;
+
+        }
+        static void RegisterHospitalStay(List<Patient>pList , List<Bed>bList){
             Console.Write("Enter patient ID number: ");
             string Patientid = Console.ReadLine();
-            
-            
 
-                // loop through the list and see if there a match
-            foreach (Patient p in nList)
-             {
-                    if (p.Id == Patientid)
-                    {
-                        return Patient p;
-                    }
+            foreach (Patient p in pList)
+            {
 
-             }
-                
+                if (p.Status != "admitted")
+                {
+                    pList.Remove(p);
+                }
+            }
+            DisplayPatients(pList);
+            foreach (Bed b in bList)
+            {
+                if (b.Available == true)
+                {
+                    bList.Remove(b);
+                }
+                DisplayBeds(bList);
+            }
+
+            // loop through the list and see if there a match
+
+            retrievePatient(pList, Patientid);
 
             
 
