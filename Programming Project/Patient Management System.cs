@@ -22,6 +22,8 @@ namespace Programming_Project
             //create list to store registered/ discharged
             List<Patient> nonadmittedList = new List<Patient>();
             //Create list to store beds
+            List<Bed> bedsList = new List<Bed>();
+            InitData(patientsList, bedsList);
 
 
             string i = "1";
@@ -41,6 +43,7 @@ namespace Programming_Project
                 else if (i.Equals("2"))
                 {
                     Console.WriteLine("Option 2. View All Beds");
+                    DisplayBeds(bedsList);
                 }
                 else if (i.Equals("3"))
                 {
@@ -122,13 +125,28 @@ namespace Programming_Project
         }
 
         //Display Bedlist
-        static void DisplayBeds(List<Bed> bedslist)
+        static void DisplayBeds(List<Bed> bedsList)
         {
-
-            Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}", "Type", "Ward No", "Bed No", "Availability", "Daily Rate");
-            foreach (Bed b in bedslist)
+            Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}","No", "Ward Type", "Ward No", "Bed No", "Availability", "Daily Rate");
+            int count = 1;
+            foreach (Bed b in bedsList)
             {
-                Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}", b.GetType(), b.WardNo, b.BedNo, b.Available, b.DailyRate);
+                if (b is ClassABed)
+                {
+                    ClassABed cab = (ClassABed)b;
+                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "A", cab.WardNo, cab.BedNo, cab.DailyRate, cab.Available);
+                }
+                else if (b is ClassBBed)
+                {
+                    ClassBBed cbb = (ClassBBed)b;
+                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "B", cbb.WardNo, cbb.BedNo, cbb.DailyRate, cbb.Available);
+                }
+                else if (b is ClassCBed)
+                {
+                    ClassCBed ccb = (ClassCBed)b;
+                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "C", ccb.WardNo, ccb.BedNo, ccb.DailyRate, ccb.Available);
+                }
+                count++;
             }
         }
 
@@ -192,6 +210,27 @@ namespace Programming_Project
 
             }
 
+            string[] sents = File.ReadAllLines("beds.csv");
+
+            for (int l = 1; l < sents.Length; l++)
+            {
+                string[] sbed = sents[l].Split(',');
+                if (sbed[0] == "A")
+                {
+                    Bed cab = new ClassABed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                    bList.Add(cab);
+                }
+                else if (sbed[0] == "B")
+                {
+                    Bed cbb = new ClassBBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                    bList.Add(cbb);
+                }
+                else if (sbed[0] == "C")
+                {
+                    Bed ccb = new ClassCBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                    bList.Add(ccb);
+                }
+            }
         }
         static void RegisterPatient(List<Patient> pList)
         {
@@ -286,15 +325,15 @@ namespace Programming_Project
             
             
 
-                // loop through the list and see if there a match
-            foreach (Patient p in nList)
-             {
-                    if (p.Id == Patientid)
-                    {
-                        return Patient p;
-                    }
+            //    // loop through the list and see if there a match
+            //foreach (Patient p in nList)
+            //{
+            //        if (p.Id == Patientid)
+            //        {
+            //            return Patient p;
+            //        }
 
-             }
+            //}
                 
 
             
