@@ -689,11 +689,22 @@ namespace Programming_Project
             }
             else
             {
-                Console.WriteLine("Bed does not exist..");
+                Console.WriteLine("Bed does not exist.  .");
                 Console.WriteLine("Stay registration unsucessful\n");
             }
         }
           
-        
+        static void TransferPatient(List<Patient>pList,List<Bed>bList)
+        {
+            DisplayPatientsM(pList);
+            Console.Write("Enter patientID number: ");
+            string p_ID = Console.ReadLine();
+            DisplayBeds(bList);
+            Console.Write("Select bed to transfer: ");
+            
+            
+
+
+        }
     }
 }
