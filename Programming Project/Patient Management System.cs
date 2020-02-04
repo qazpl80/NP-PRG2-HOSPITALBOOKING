@@ -175,17 +175,17 @@ namespace Programming_Project
                 if (b is ClassABed)
                 {
                     ClassABed cab = (ClassABed)b;
-                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "A", cab.WardNo, cab.BedNo, cab.DailyRate, cab.Available);
+                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "A", cab.WardNo, cab.BedNo, cab.Available, cab.DailyRate);
                 }
                 else if (b is ClassBBed)
                 {
                     ClassBBed cbb = (ClassBBed)b;
-                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "B", cbb.WardNo, cbb.BedNo, cbb.DailyRate, cbb.Available);
+                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "B", cbb.WardNo, cbb.BedNo, cbb.Available, cbb.DailyRate);
                 }
                 else if (b is ClassCBed)
                 {
                     ClassCBed ccb = (ClassCBed)b;
-                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "C", ccb.WardNo, ccb.BedNo, ccb.DailyRate, ccb.Available);
+                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "C", ccb.WardNo, ccb.BedNo, ccb.Available, ccb.DailyRate);
                 }
                 count++;
             }
@@ -307,8 +307,8 @@ namespace Programming_Project
                 {
                     Stay st = new Stay(DateTime.Now, p);
                     MedicalRecord mr = new MedicalRecord(pob, ptm, DateTime.Now);
-                    st.AddMedicalRecord(mr);
                     p.Stay = st;
+                    st.AddMedicalRecord(mr);
                     Console.WriteLine("Medical record entry successfully added.");
                     break;
                 }
