@@ -333,9 +333,9 @@ namespace Programming_Project
             foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
             {
                 Console.WriteLine("\n======Record # {0}======", counter);
-                Console.WriteLine("Date/Time: ", mr.DatetimeEntered);
-                Console.WriteLine("Temperature: ", mr.Temperature);
-                Console.WriteLine("Diagnosis: ", mr.Diagnosis);
+                Console.WriteLine("Date/Time: {0}", mr.DatetimeEntered);
+                Console.WriteLine("Temperature: {0}", mr.Temperature);
+                Console.WriteLine("Diagnosis: {0}", mr.Diagnosis);
                 counter++;
             }
         }
