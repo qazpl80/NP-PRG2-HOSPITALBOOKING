@@ -295,7 +295,7 @@ namespace Programming_Project
             Console.WriteLine("Status: {0}", p.Status);
             Console.WriteLine("\n======Stay ======");
             Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
-            //Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
+            Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
 
             int counter = 1;
             foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
@@ -529,15 +529,16 @@ namespace Programming_Project
                 if (p.Id == id)
                 {
                     Console.WriteLine("\nName of Patient: {0}\nID number: {1}\nCitizenship Status: {2}\nGender: {3}\nStatus: {4}", p.Name, p.Id, p.CitizenStatus, p.Gender, p.Status);
-                    Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}",p.Stay.AdmittedDate,p.Stay.DischargedDate.Value,p.Stay.IsPaid);
+                    Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}",p.Stay.AdmittedDate,p.Stay.DischargedDate,p.Stay.IsPaid);
                     Console.WriteLine("======");
-                    foreach (Bed b in bList)
+
+                    foreach (BedStay bs in p.Stay.BedstayList)
                     {
-                        if(b is ClassABed)
+                        if(bs.Bed is ClassABed)
                         {
                             wardClass = "A";
                         }
-                        else if(b is ClassBBed)
+                        else if(bs.Bed is ClassBBed)
                         {
                             wardClass = "B";
                         }
@@ -545,11 +546,13 @@ namespace Programming_Project
                         {
                             wardClass = "C";
                         }
-                        foreach (BedStay bs in p.Stay.BedstayList)
-                        {
-                            Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}", b.WardNo, b.BedNo, wardClass, bs.StartBedstay,bs.EndBedstay);
-                        }
+                        Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}", bs.Bed.WardNo, bs.Bed.BedNo, wardClass, bs.StartBedstay, bs.EndBedstay);
+
+
+
+
                     }
+                    break;
                 }
                 else
                     Console.WriteLine("Patient Not Found, Please try again...");
@@ -654,7 +657,9 @@ namespace Programming_Project
                         Stay NewStay = new Stay(Dates,p);
 
                         NewStay.AddBedstay(newbedStay);
+                        p.Stay = NewStay;
                         p.Status = "Admitted";
+                        Console.WriteLine("Testing: Patient {0}", p.Stay.AdmittedDate);
 
                     }
                 }

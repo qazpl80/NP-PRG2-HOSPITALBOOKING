@@ -32,11 +32,12 @@ namespace Programming_Project
         }
         public double CalculateCharges()
         {
-          
-            
+
+            double total = 0;
+            int daysin = 0;
             foreach (BedStay bs in Stay.BedstayList)
             {
-                int daysin = 0;
+                
                 DateTime admission = bs.StartBedstay;
                 DateTime? discharge = bs.EndBedstay.GetValueOrDefault();
                 daysin = Convert.ToInt32(discharge - admission);
@@ -44,17 +45,21 @@ namespace Programming_Project
 
                 if (bed is ClassABed)
                 {
-                    return bed.CalculateCharges(CitizenStatus, daysin);
+                    double c = bed.CalculateCharges(CitizenStatus, daysin);
+                    total += c;
+
 
                 }
                 else if (bed is ClassBBed)
                 {
-                    return bed.CalculateCharges(CitizenStatus, daysin);
+                    double c = bed.CalculateCharges(CitizenStatus, daysin);
+                    total += c;
                 }
                 else if (bed is ClassCBed)
                 {
 
-                    return bed.CalculateCharges(CitizenStatus, daysin);
+                    double c = bed.CalculateCharges(CitizenStatus, daysin);
+                    total += c;
                 }
                
             }
