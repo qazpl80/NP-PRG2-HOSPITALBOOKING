@@ -69,7 +69,7 @@ namespace Programming_Project
                 else if (i.Equals("7"))
                 {
                     Console.WriteLine("Option 7. Add Medical Record Entry");
-                    DisplayPatients(patientsList);
+                    DisplayPatientsM(patientsList);
                     AddMedicalRecord(patientsList);
                 }
                 else if (i.Equals("8"))
@@ -352,7 +352,7 @@ namespace Programming_Project
                             {
                                 Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
                                 Console.WriteLine("End of bed stay: ", bs.EndBedstay);
-                                Console.WriteLine("Accompanying person: ",);
+                                Console.WriteLine("Accompanying person: ");
                             }
                         }
                         else if (b is ClassCBed)
@@ -668,11 +668,22 @@ namespace Programming_Project
             }
             else
             {
-                Console.WriteLine("Bed does not exist..");
+                Console.WriteLine("Bed does not exist.  .");
                 Console.WriteLine("Stay registration unsucessful\n");
             }
         }
           
-        
+        static void TransferPatient(List<Patient>pList,List<Bed>bList)
+        {
+            DisplayPatientsM(pList);
+            Console.Write("Enter patientID number: ");
+            string p_ID = Console.ReadLine();
+            DisplayBeds(bList);
+            Console.Write("Select bed to transfer: ");
+            
+            
+
+
+        }
     }
 }
