@@ -679,8 +679,8 @@ namespace Programming_Project
                 Console.WriteLine("Stay registration unsucessful\n");
             }
         }
-          
-        static void TransferPatient(List<Patient>pList,List<Bed>bList)
+
+        static void TransferPatient(List<Patient> pList, List<Bed> bList)
         {
             DisplayPatientsM(pList);
             Console.Write("Enter patientID number: ");
@@ -691,15 +691,17 @@ namespace Programming_Project
             BedStay bedStay = new BedStay();
             DateTime Transfer = Convert.ToDateTime(Console.ReadLine());
             Bed N = bList[num - 1];
-            if(N.Available != false)
+            if (N.Available != false)
             {
                 if (N is ClassABed)
                 {
 
                 }
             }
+        }
 
-
+        static void APIPM()
+        {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.data.gov.sg");
