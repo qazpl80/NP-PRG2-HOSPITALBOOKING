@@ -317,7 +317,8 @@ namespace Programming_Project
             Console.Write("Enter patient ID number: ");
             string pid = Console.ReadLine();
             Console.Write("Date of discharge (DD/MM/YYYY): ");
-            DateTime dod = Convert.ToDateTime(Console.ReadLine());
+            string dod1 = Console.ReadLine();
+            DateTime dod = Convert.ToDateTime(dod1);
             foreach (Patient p in patientsList)
             {
                 if (p.Id == pid)
@@ -335,35 +336,36 @@ namespace Programming_Project
                     int count = 1;
                     foreach (BedStay bs in p.Stay.BedstayList)
                     {
+                        int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
                         Console.WriteLine("\n======Bed # {0} ======",count);
                         Console.WriteLine("Ward number: {0}", bs.Bed.WardNo);
                         Console.WriteLine("Bed number: {0}", bs.Bed.BedNo);
                         Console.WriteLine("Ward Class: {0}", "A");
-                        Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
-                        Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
+                        //Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
+                        //Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
                         if (bs.Bed is ClassABed)
                         {
                             ClassABed cab = (ClassABed)bs.Bed;
                             Console.WriteLine("Accompanying Person: ", cab.AccompanyingPerson);
-                            double totalcost = p.CalculateCharges();
+                            bs.Bed.CalculateCharges(p.CitizenStatus,daysDiff);
                         }
                         else if (bs.Bed is ClassBBed)
                         {
                             ClassBBed cbb = (ClassBBed)bs.Bed;
                             Console.WriteLine("AirCon: ", cbb.AirCon);
-                            double totalcost = p.CalculateCharges();
+                            bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
                         }
                         else if (bs.Bed is ClassCBed)
                         {
                             ClassCBed ccb = (ClassCBed)bs.Bed;
                             Console.WriteLine("Avaliable: ", ccb.Available);
-                            double totalcost = p.CalculateCharges();
+                            bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
                         }
-                        int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
                         Console.WriteLine("Number of days stayed: ",daysDiff);
                         count++;
                     }
-
+                    Console.WriteLine("[Press any key to proceed with payment]");
+                    Console.ReadKey();
                 }
             }
         }
