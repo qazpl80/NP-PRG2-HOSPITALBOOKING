@@ -65,6 +65,7 @@ namespace Programming_Project
                 else if (i.Equals("6"))
                 {
                     Console.WriteLine("Option 6. Retrieve Patient");
+                    retrievePatient(patientsList, bedsList);
                 }
                 else if (i.Equals("7"))
                 {
@@ -441,25 +442,46 @@ namespace Programming_Project
             }
 
         }
-        //static Patient retrievePatient(List<Patient>pList, Stay obj,  )
-        //{
-        //    DisplayPatients(pList);
-        //    Console.Write("Enter patient ID Number: ");
-        //    string id = Console.ReadLine();
-        //    foreach(Patient p in pList)
-        //    {
-        //        if (p.Id == id)
-        //        {
-        //            Console.WriteLine("\nName of Patient: {0}\nID number{1}\nCitizenship Status: {2}\nGender: {3}\nStatus: ", p.Name, p.Id, p.CitizenStatus, p.Gender, p.Status);
-        //            Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}", obj.AdmittedDate, obj.DischargedDate, obj.IsPaid);
-        //            Console.WriteLine("======");
-        //            Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}",)
-        //        }
-        //        else
-        //            Console.WriteLine("Patient Not Found, Please try again...");
-        //        continue;
-        //    }
-        //}
+        static void retrievePatient(List<Patient> pList,List<Bed>bList)
+        {
+            string wardClass = "";
+            DisplayPatients(pList);
+            Console.Write("Enter patient ID Number: ");
+            string id = Console.ReadLine();
+            foreach (Patient p in pList)
+            {
+                
+
+                    if (p.Id == id)
+                    {
+                        Console.WriteLine("\nName of Patient: {0}\nID number{1}\nCitizenship Status: {2}\nGender: {3}\nStatus: ", p.Name, p.Id, p.CitizenStatus, p.Gender, p.Status);
+                        Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}",p.Stay.AdmittedDate,p.Stay.DischargedDate,p.Stay.IsPaid);
+                        Console.WriteLine("======");
+                        foreach (Bed b in bList)
+                        {
+                            if(b is ClassABed)
+                            {
+                                wardClass = "A";
+                            }
+                            else if(b is ClassBBed)
+                            {
+                                wardClass = "B";
+                            }
+                            else
+                            {
+                                wardClass = "C";
+                            }
+                            foreach (BedStay bs in p.Stay.BedstayList)
+                            {
+                                Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}", b.WardNo, b.BedNo, wardClass, bs.StartBedstay,bs.EndBedstay);
+                            }
+                        }
+                    }
+                    else
+                        Console.WriteLine("Patient Not Found, Please try again...");
+                
+            }
+        }
         static Patient searchPatient(List<Patient> pList, string Patientid)
         {
             foreach (Patient p in pList)
@@ -475,21 +497,7 @@ namespace Programming_Project
             return null;
 
         }
-        static Patient retrievePatient(List<Patient> pList, string Patientid)
-        {
-            foreach (Patient p in pList)
-            {
-                if (p.Id == Patientid)
-                {
-                    return p;
-                }
-
-
-            }
-            Console.WriteLine("Patient does not exist, please enter the correct patient number.");
-            return null;
-
-        }
+        
         static void AddNonAdmitted(List<Patient>pList,List<Patient>nList)
         {
             foreach (Patient i in pList)
