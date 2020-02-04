@@ -406,6 +406,7 @@ namespace Programming_Project
                                 Console.WriteLine("New CDA balance: ${0}", ch.CdaBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", chcost);
                                 Console.WriteLine("Payment Successful!");
+                                p.Stay.IsPaid = true;
                             }
                             else if (ch.CdaBalance < chcost)
                             {
@@ -414,6 +415,7 @@ namespace Programming_Project
                                 Console.WriteLine("New CDA balance: ${0}", ch.CdaBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", chcost);
                                 Console.WriteLine("Payment Successful!");
+                                p.Stay.IsPaid = true;
                             }
                             else if (ch.CdaBalance == chcost)
                             {
@@ -422,6 +424,7 @@ namespace Programming_Project
                                 Console.WriteLine("New CDA balance: ${0}", ch.CdaBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", chcost);
                                 Console.WriteLine("Payment Successful!");
+                                p.Stay.IsPaid = true;
                             }
                             else
                             {
@@ -440,6 +443,7 @@ namespace Programming_Project
                                 Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
                                 Console.WriteLine("Payment Successful!");
+                                p.Stay.IsPaid = true;
                             }
                             else if (ad.medisaveBalance < adcost)
                             {
@@ -448,6 +452,7 @@ namespace Programming_Project
                                 Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
                                 Console.WriteLine("Payment Successful!");
+                                p.Stay.IsPaid = true;
                             }
                             else if (ad.medisaveBalance == adcost)
                             {
@@ -456,6 +461,7 @@ namespace Programming_Project
                                 Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
                                 Console.WriteLine("Payment Successful!");
+                                p.Stay.IsPaid = true;
                             }
                             else
                             {
@@ -469,6 +475,7 @@ namespace Programming_Project
                             double sncost = sn.CalculateCharges();
                             Console.WriteLine("Sub-total: ${0} has been paid by cash", sncost);
                             Console.WriteLine("Payment Successful!");
+                            p.Stay.IsPaid = true;
                         }
                         else
                         {
