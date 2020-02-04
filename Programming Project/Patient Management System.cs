@@ -1,7 +1,8 @@
 ﻿//============================================================
-// Student Number	: S10198319, S10196678
-// Student Name	: Tan Yuan Ming, Gladys
-// Module  Group	: P08 //============================================================
+    // Student Number	: S10198319, S10196678
+    // Student Name	: Tan Yuan Ming, Gladys
+    // Module  Group	: P08
+//============================================================
 
 
 using System;
@@ -10,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Programming_Project
 {
@@ -82,7 +85,6 @@ namespace Programming_Project
                     {
                         if (p.Id == pid)
                         {
-                            Console.WriteLine("Patient found: {0}", p.Name);
                             DisplayMedicalRecord(p);
                             break;
                         }
@@ -111,6 +113,35 @@ namespace Programming_Project
                     Console.WriteLine("Invalid Option, Please Try Again.");
                 }
             }
+            //ADVANCE FEATURES
+            //List<> booklist;
+
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri("http://ictonejourney.com");
+
+            //    //http GET
+            //    Task<HttpResponseMessage> respondTask = client.GetAsync("/api/books");
+            //    respondTask.Wait();
+
+            //    HttpResponseMessage result = respondTask.Result;
+            //    if (result.IsSuccessStatusCode)
+            //    {
+            //        Task<string> readTask = result.Content.ReadAsStringAsync(); //Serialize to string
+            //        readTask.Wait();
+
+            //        string data = readTask.Result;
+            //        booklist = JsonConvert.DeserializeObject<List<Book>>(data); //deserialize to Json to List<Book>
+
+            //        foreach (Book b in booklist)
+            //        {
+            //            Console.WriteLine("{0,2} {1,13} {2,-65} {3,20} {4,4} {5,3}",
+            //                b.Id, b.Isbn, b.Title, b.Author, b.Pages, b.Qty);
+
+            //            //Console.WriteLine(b);
+            //        }
+            //  }
+            //}
         }
         //display menu
         static void DisplayMenu()
@@ -297,7 +328,6 @@ namespace Programming_Project
             Console.WriteLine("\n======Stay ======");
             Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
             Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
-
             int counter = 1;
             foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
             {
@@ -306,7 +336,6 @@ namespace Programming_Project
                 Console.WriteLine("Temperature: ", mr.Temperature);
                 Console.WriteLine("Diagnosis: ", mr.Diagnosis);
                 counter++;
-
             }
         }
         static void dischargepayment(List<Patient> patientsList)
@@ -341,23 +370,25 @@ namespace Programming_Project
                         {
                             ClassABed cab = (ClassABed)bs.Bed;
                             Console.WriteLine("Accompanying Person: ", cab.AccompanyingPerson);
+                            double totalcost = p.CalculateCharges();
                         }
                         else if (bs.Bed is ClassBBed)
                         {
                             ClassBBed cbb = (ClassBBed)bs.Bed;
                             Console.WriteLine("AirCon: ", cbb.AirCon);
+                            double totalcost = p.CalculateCharges();
                         }
                         else if (bs.Bed is ClassCBed)
                         {
                             ClassCBed ccb = (ClassCBed)bs.Bed;
                             Console.WriteLine("Avaliable: ", ccb.Available);
-
+                            double totalcost = p.CalculateCharges();
                         }
                         int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
                         Console.WriteLine("Number of days stayed: ",daysDiff);
                         count++;
                     }
-                    p.CalculateCharges();
+
                 }
             }
         }
