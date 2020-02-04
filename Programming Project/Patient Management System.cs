@@ -393,6 +393,87 @@ namespace Programming_Project
                         }
                         Console.WriteLine("[Press any key to proceed with payment]");
                         Console.ReadKey();
+                        Console.WriteLine("\nCommencing payment...\n");
+                        if (p is Child)
+                        {
+                            Child ch = (Child)p;
+                            Console.WriteLine("{0} has been deducted from CDA",ch.CdaBalance);
+                            double chcost = ch.CalculateCharges();
+                            if (ch.CdaBalance > chcost)
+                            {
+                                ch.CdaBalance -= chcost;
+                                chcost = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ch.CdaBalance);
+                                Console.WriteLine("Sub-total: ${0} has been paid by cash", chcost);
+                                Console.WriteLine("Payment Successful!");
+                            }
+                            else if (ch.CdaBalance < chcost)
+                            {
+                                chcost -= ch.CdaBalance;
+                                ch.CdaBalance = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ch.CdaBalance);
+                                Console.WriteLine("Sub-total: ${0} has been paid by cash", chcost);
+                                Console.WriteLine("Payment Successful!");
+                            }
+                            else if (ch.CdaBalance == chcost)
+                            {
+                                chcost = 0;
+                                ch.CdaBalance = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ch.CdaBalance);
+                                Console.WriteLine("Sub-total: ${0} has been paid by cash", chcost);
+                                Console.WriteLine("Payment Successful!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Error in calculating Balance");
+                            }
+                        }
+                        else if (p is Adult)
+                        {
+                            Adult ad = (Adult)p;
+                            Console.WriteLine("{0} has been deducted from Medisave", ad.medisaveBalance);
+                            double adcost = ad.CalculateCharges();
+                            if (ad.medisaveBalance > adcost)
+                            {
+                                ad.medisaveBalance -= adcost;
+                                adcost = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
+                                Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
+                                Console.WriteLine("Payment Successful!");
+                            }
+                            else if (ad.medisaveBalance < adcost)
+                            {
+                                adcost -= ad.medisaveBalance;
+                                ad.medisaveBalance = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
+                                Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
+                                Console.WriteLine("Payment Successful!");
+                            }
+                            else if (ad.medisaveBalance == adcost)
+                            {
+                                adcost = 0;
+                                ad.medisaveBalance = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
+                                Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
+                                Console.WriteLine("Payment Successful!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Error in calculating Balance");
+                            }
+                        }
+                        else if (p is Senior)
+                        {
+                            Senior sn = (Senior)p;
+                            Console.WriteLine("Total Cost has been reduced by half");
+                            double sncost = sn.CalculateCharges();
+                            Console.WriteLine("Sub-total: ${0} has been paid by cash", sncost);
+                            Console.WriteLine("Payment Successful!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error in Patient (Child/Adult/Senior) Class");
+                        }
                     }
                 }
             }
