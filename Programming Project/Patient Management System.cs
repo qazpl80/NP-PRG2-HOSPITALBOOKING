@@ -96,6 +96,7 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 10. Discharge and payment");
                     DisplayPatientsM(patientsList);
+                    dischargepayment(patientsList);
                 }
                 else if (i.Equals("11"))
                 {
@@ -308,7 +309,7 @@ namespace Programming_Project
 
             }
         }
-        static void dischargepayment(List<Patient> patientsList,List<Bed> bedsList)
+        static void dischargepayment(List<Patient> patientsList)
         {
             Console.Write("Enter patient ID number: ");
             string pid = Console.ReadLine();
@@ -327,22 +328,21 @@ namespace Programming_Project
                     Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
                     Console.WriteLine("Discharge Date: {0}", dod);
                     p.Stay.IsPaid = false;
-                    foreach (Bed b in bedsList)
+                    int count = 1;
+                    foreach (BedStay bs in p.Stay.BedstayList)
                     {
-                        if (b is ClassABed)
+                        Console.WriteLine("\n======Bed # {0} ======",count);
+                        Console.WriteLine("Ward number: ", bs.Bed.WardNo);
+                        Console.WriteLine("Bed number: ", bs.Bed.BedNo);
+                        Console.WriteLine("Ward Class: ", "A");
+                        Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
+                        Console.WriteLine("End of bed stay: ", bs.EndBedstay);
+                        if (bs.Bed is ClassABed)
                         {
-                            Console.WriteLine("\n======Bed # 1 ======");
-                            Console.WriteLine("Ward number: ", b.WardNo);
-                            Console.WriteLine("Bed number: ", b.BedNo);
-                            Console.WriteLine("Ward Class: ", "A");
-                            foreach (BedStay bs in p.Stay.BedstayList)
-                            {
-                                Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
-                                Console.WriteLine("End of bed stay: ", bs.EndBedstay);
-                            }
-
+                            ClassABed cab = (ClassABed)bs.Bed;
+                            Console.WriteLine("Accompanying Person: ", cab.AccompanyingPerson);
                         }
-                        else if (b is ClassBBed)
+                        else if (bs.Bed is ClassBBed)
                         {
                             Console.WriteLine("\n======Bed # 1 ======");
                             Console.WriteLine("Ward number: ", b.WardNo);
@@ -352,22 +352,20 @@ namespace Programming_Project
                             {
                                 Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
                                 Console.WriteLine("End of bed stay: ", bs.EndBedstay);
-                                Console.WriteLine("Accompanying person: ");
+                                Console.WriteLine("Accompanying person: ",);
                             }
                         }
-                        else if (b is ClassCBed)
+                        else if (bs.Bed is ClassCBed)
                         {
-                            Console.WriteLine("\n======Bed # 1 ======");
-                            Console.WriteLine("Ward number: ", b.WardNo);
-                            Console.WriteLine("Bed number: ", b.BedNo);
-                            Console.WriteLine("Ward Class: ", "C");
-                            foreach (BedStay bs in p.Stay.BedstayList)
-                            {
-                                Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
-                                Console.WriteLine("End of bed stay: ", bs.EndBedstay);
-                            }
+                            ClassCBed ccb = (ClassCBed)bs.Bed;
+                            Console.WriteLine("Avaliable: ", ccb.Available);
+
                         }
+                        int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
+                        Console.WriteLine("Number of days stayed: ",daysDiff);
+                        count++;
                     }
+                    p.CalculateCharges();
                 }
             }
         }
