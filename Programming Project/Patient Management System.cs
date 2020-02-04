@@ -419,6 +419,40 @@ namespace Programming_Project
             }
 
         }
+        //static Patient retrievePatient(List<Patient>pList, Stay obj,  )
+        //{
+        //    DisplayPatients(pList);
+        //    Console.Write("Enter patient ID Number: ");
+        //    string id = Console.ReadLine();
+        //    foreach(Patient p in pList)
+        //    {
+        //        if (p.Id == id)
+        //        {
+        //            Console.WriteLine("\nName of Patient: {0}\nID number{1}\nCitizenship Status: {2}\nGender: {3}\nStatus: ", p.Name, p.Id, p.CitizenStatus, p.Gender, p.Status);
+        //            Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}", obj.AdmittedDate, obj.DischargedDate, obj.IsPaid);
+        //            Console.WriteLine("======");
+        //            Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}",)
+        //        }
+        //        else
+        //            Console.WriteLine("Patient Not Found, Please try again...");
+        //        continue;
+        //    }
+        //}
+        static Patient searchPatient(List<Patient> pList, string Patientid)
+        {
+            foreach (Patient p in pList)
+            {
+                if (p.Id == Patientid)
+                {
+                    return p;
+                }
+
+
+            }
+            Console.WriteLine("Patient does not exist, please enter the correct patient number.");
+            return null;
+
+        }
         static Patient retrievePatient(List<Patient> pList, string Patientid)
         {
             foreach (Patient p in pList)
