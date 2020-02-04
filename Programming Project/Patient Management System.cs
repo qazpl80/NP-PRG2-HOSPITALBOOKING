@@ -308,6 +308,7 @@ namespace Programming_Project
                     Stay st = new Stay(DateTime.Now, p);
                     MedicalRecord mr = new MedicalRecord(pob, ptm, DateTime.Now);
                     st.AddMedicalRecord(mr);
+                    p.Stay = st;
                     Console.WriteLine("Medical record entry successfully added.");
                     break;
                 }
