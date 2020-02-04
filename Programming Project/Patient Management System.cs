@@ -437,31 +437,31 @@ namespace Programming_Project
                         else if (p is Adult)
                         {
                             Adult ad = (Adult)p;
-                            Console.WriteLine("{0} has been deducted from Medisave", ad.medisaveBalance);
+                            Console.WriteLine("{0} has been deducted from Medisave", ad.MedisaveBalance);
                             double adcost = ad.CalculateCharges();
-                            if (ad.medisaveBalance > adcost)
+                            if (ad.MedisaveBalance > adcost)
                             {
-                                ad.medisaveBalance -= adcost;
+                                ad.MedisaveBalance -= adcost;
                                 adcost = 0;
-                                Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
+                                Console.WriteLine("New CDA balance: ${0}", ad.MedisaveBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
                                 Console.WriteLine("Payment Successful!");
                                 p.Stay.IsPaid = true;
                             }
-                            else if (ad.medisaveBalance < adcost)
+                            else if (ad.MedisaveBalance < adcost)
                             {
-                                adcost -= ad.medisaveBalance;
-                                ad.medisaveBalance = 0;
-                                Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
+                                adcost -= ad.MedisaveBalance;
+                                ad.MedisaveBalance = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ad.MedisaveBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
                                 Console.WriteLine("Payment Successful!");
                                 p.Stay.IsPaid = true;
                             }
-                            else if (ad.medisaveBalance == adcost)
+                            else if (ad.MedisaveBalance == adcost)
                             {
                                 adcost = 0;
-                                ad.medisaveBalance = 0;
-                                Console.WriteLine("New CDA balance: ${0}", ad.medisaveBalance);
+                                ad.MedisaveBalance = 0;
+                                Console.WriteLine("New CDA balance: ${0}", ad.MedisaveBalance);
                                 Console.WriteLine("Sub-total: ${0} has been paid by cash", adcost);
                                 Console.WriteLine("Payment Successful!");
                                 p.Stay.IsPaid = true;
@@ -941,7 +941,7 @@ namespace Programming_Project
                     // header
                     Console.WriteLine("\n============================3.1 Display currencies exchange rate=================================\n");
                     Console.WriteLine("Base: Singaporea Dollars(SGD)");
-                    Console.WriteLine("Date: ",objectt)
+                    //Console.WriteLine("Date: ",objectt)
 
                 }
 
