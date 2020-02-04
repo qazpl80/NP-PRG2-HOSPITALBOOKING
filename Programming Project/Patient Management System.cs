@@ -300,7 +300,7 @@ namespace Programming_Project
             Console.WriteLine("Gender: {0}", p.Gender);
             Console.WriteLine("Status: {0}", p.Status);
             Console.WriteLine("\n======Stay ======");
-            Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
+            Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate.ToString("dd/MM/yyyy"));
             Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
             int counter = 1;
             foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
@@ -526,8 +526,17 @@ namespace Programming_Project
 
                 if (p.Id == id)
                 {
+                    string pay = "";
                     Console.WriteLine("\nName of Patient: {0}\nID number: {1}\nCitizenship Status: {2}\nGender: {3}\nStatus: {4}", p.Name, p.Id, p.CitizenStatus, p.Gender, p.Status);
-                    Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}",p.Stay.AdmittedDate,p.Stay.DischargedDate,p.Stay.IsPaid);
+                    if (p.Stay.IsPaid == false)
+                    {
+                        pay = "Unpaid";
+                    }
+                    else
+                    {
+                        pay = "Paid";
+                    }
+                    Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}",p.Stay.AdmittedDate.ToString("dd/MM/yyyy"),p.Stay.DischargedDate,pay);
                     Console.WriteLine("======");
 
                     foreach (BedStay bs in p.Stay.BedstayList)
@@ -544,7 +553,7 @@ namespace Programming_Project
                         {
                             wardClass = "C";
                         }
-                        Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}", bs.Bed.WardNo, bs.Bed.BedNo, wardClass, bs.StartBedstay, bs.EndBedstay);
+                        Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}", bs.Bed.WardNo, bs.Bed.BedNo, wardClass, bs.StartBedstay.ToString("dd/MM/yyyy"), bs.EndBedstay);
 
 
 
@@ -678,9 +687,18 @@ namespace Programming_Project
             string p_ID = Console.ReadLine();
             DisplayBeds(bList);
             Console.Write("Select bed to transfer: ");
-        }
-        static void APIPM()
-        {
+            int num = Convert.ToInt32(Console.ReadLine());
+            BedStay bedStay = new BedStay();
+            DateTime Transfer = Convert.ToDateTime(Console.ReadLine());
+            Bed N = bList[num - 1];
+            if(N.Available != false)
+            {
+                if (N is ClassABed)
+                {
+
+                }
+            }
+
 
             using (HttpClient client = new HttpClient())
             {
