@@ -23,7 +23,8 @@ namespace Programming_Project
             //Create list to store beds
             List<Bed> bedsList = new List<Bed>();
             InitData(patientsList, bedsList);
-
+            //create object for medical record
+            List<Stay> stayList = new List<Stay>();
 
             string i = "1";
 
@@ -36,8 +37,6 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 1. View All Patients");
                     DisplayPatients(patientsList);
-              
-
                 }
                 else if (i.Equals("2"))
                 {
@@ -53,6 +52,7 @@ namespace Programming_Project
                 else if (i.Equals("4"))
                 {
                     Console.WriteLine("Option 4. Add new bed");
+                    Addnewbed(bedsList);
                 }
                 else if (i.Equals("5"))
                 {
@@ -70,10 +70,59 @@ namespace Programming_Project
                 else if (i.Equals("7"))
                 {
                     Console.WriteLine("Option 7. Add Medical Record Entry");
+                    DisplayPatients(patientsList);
+                    Console.Write("Enter patient ID number: ");
+                    string pid = Console.ReadLine();
+                    Console.Write("\n Patient temperature: ");
+                    double ptm = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Please enter patient observation: ");
+                    string pob = Console.ReadLine();
+
+                    foreach (Patient p in patientsList)
+                    {
+                        if (p.Id == pid)
+                        {
+                            MedicalRecord mr = new MedicalRecord(pob,ptm,DateTime.Now);
+                            p.Stay.AddMedicalRecord(mr);
+                            Console.WriteLine("Medical record entry successfully added.");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error, Patient not found, please try again");
+                            break;
+                        }
+                    }
                 }
                 else if (i.Equals("8"))
                 {
                     Console.WriteLine("Option 8. View medical records");
+                    DisplayPatients(patientsList);
+                    Console.Write("Enter patient ID number: ");
+                    string pid = Console.ReadLine();
+                    foreach (Patient p in patientsList)
+                    {
+                        if (p.Id == pid)
+                        {
+                            Console.WriteLine("Name of patient: {0}", p.Name);
+                            Console.WriteLine("ID number: {0}", p.Id);
+                            Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+                            Console.WriteLine("Gender: {0}", p.Gender);
+                            Console.WriteLine("Status: {0}", p.Status);
+                            Console.WriteLine("\n======Stay======");
+                            Console.WriteLine("Admission Date: {0}",/*p.Stay.AdmittedDate*/DateTime.Now);
+                            Console.WriteLine("Admission Date: {0}", /*p.Stay.DischargedDate*/DateTime.Now);
+                            Console.WriteLine("\n======Record # 1======");
+                            Console.WriteLine("Temperature: ", stayList[1]);
+                            Console.WriteLine("Temperature: ", stayList[0]);
+                            Console.WriteLine("Diagnosis: ", stayList[2]);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error, Patient not found, please try again");
+                            break;
+                        }
+                    }
                 }
                 else if (i.Equals("9"))
                 {
@@ -156,6 +205,7 @@ namespace Programming_Project
             }
         }
         //InIt List
+
         static void InitData(List<Patient> pList, List<Bed>bList)
         {
             // read csv lines from patients
@@ -309,26 +359,67 @@ namespace Programming_Project
                 Console.WriteLine("{0} is not registered successfully",name);
             }
         }
-        //static Patient retrievePatient(List<Patient>pList, Stay obj,  )
-        //{
-        //    DisplayPatients(pList);
-        //    Console.Write("Enter patient ID Number: ");
-        //    string id = Console.ReadLine();
-        //    foreach(Patient p in pList)
-        //    {
-        //        if (p.Id == id)
-        //        {
-        //            Console.WriteLine("\nName of Patient: {0}\nID number{1}\nCitizenship Status: {2}\nGender: {3}\nStatus: ", p.Name, p.Id, p.CitizenStatus, p.Gender, p.Status);
-        //            Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}", obj.AdmittedDate, obj.DischargedDate, obj.IsPaid);
-        //            Console.WriteLine("======");
-        //            Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}",)
-        //        }
-        //        else
-        //            Console.WriteLine("Patient Not Found, Please try again...");
-        //        continue;
-        //    }
-        //}
-        static Patient searchPatient(List<Patient> pList, string Patientid)
+        static void Addnewbed(List<Bed> blist)
+        {
+            Console.Write("Enter Ward Type [A/B/C]: ");
+            string wt = Console.ReadLine();
+            Console.Write("Enter Ward No.: ");
+            int wn = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter Bed No.: ");
+            int bn = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter Daily Rate: $");
+            double dr = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Enter Available [Y/N]: ");
+            string av = Console.ReadLine();
+
+            if (wt == "A")
+            {
+                if (av == "Y")
+                {
+                    Bed cab = new ClassABed(wn, bn, dr, true, false);
+                    blist.Add(cab);
+                    Console.WriteLine("Bed added successfully.");
+                }
+                else if (av == "N")
+                {
+                    Bed cab = new ClassABed(wn, bn, dr, false, false);
+                    blist.Add(cab);
+                    Console.WriteLine("Bed added successfully.");
+                }
+            }
+            if (wt == "B")
+            {
+                if (av == "Y")
+                {
+                    Bed cab = new ClassBBed(wn, bn, dr, true, false);
+                    blist.Add(cab);
+                    Console.WriteLine("Bed added successfully.");
+                }
+                else if (av == "N")
+                {
+                    Bed cab = new ClassBBed(wn, bn, dr, false, false);
+                    blist.Add(cab);
+                    Console.WriteLine("Bed added successfully.");
+                }
+            }
+            if (wt == "C")
+            {
+                if (av == "Y")
+                {
+                    Bed cab = new ClassCBed(wn, bn, dr, true, false);
+                    blist.Add(cab);
+                    Console.WriteLine("Bed added successfully.");
+                }
+                else if (av == "N")
+                {
+                    Bed cab = new ClassCBed(wn, bn, dr, false, false);
+                    blist.Add(cab);
+                    Console.WriteLine("Bed added successfully.");
+                }
+            }
+
+        }
+        static Patient retrievePatient(List<Patient> pList, string Patientid)
         {
             foreach (Patient p in pList)
             {
@@ -472,8 +563,7 @@ namespace Programming_Project
             
 
 
-
-        }
+     
     }
     
 }
