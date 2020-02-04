@@ -47,8 +47,6 @@ namespace Programming_Project
                 {
                     double c = bed.CalculateCharges(CitizenStatus, daysin);
                     total += c;
-
-
                 }
                 else if (bed is ClassBBed)
                 {
@@ -57,7 +55,6 @@ namespace Programming_Project
                 }
                 else if (bed is ClassCBed)
                 {
-
                     double c = bed.CalculateCharges(CitizenStatus, daysin);
                     total += c;
                 }
