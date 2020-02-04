@@ -60,7 +60,7 @@ namespace Programming_Project
                 }
                
             }
-            return 0;
+            return total;
             
 
         }
