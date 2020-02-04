@@ -42,16 +42,19 @@ namespace Programming_Project
 
                 if (bed is ClassABed)
                 {
+                    ClassABed cla = (ClassABed)bs.Bed;
                     double c = bed.CalculateCharges(CitizenStatus, daysin);
                     total += c;
                 }
                 else if (bed is ClassBBed)
                 {
+                    ClassABed cla = (ClassABed)bs.Bed;
                     double c = bed.CalculateCharges(CitizenStatus, daysin);
                     total += c;
                 }
                 else if (bed is ClassCBed)
                 {
+                    ClassABed cla = (ClassABed)bs.Bed;
                     double c = bed.CalculateCharges(CitizenStatus, daysin);
                     total += c;
                 }
