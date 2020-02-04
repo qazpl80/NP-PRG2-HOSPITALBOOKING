@@ -13,7 +13,6 @@ namespace Programming_Project
 {
     class MedicalRecord
     {
-
         public string Diagnosis { get; set; }
         public double Temperature { get; set; }
         public DateTime DatetimeEntered { get; set; }

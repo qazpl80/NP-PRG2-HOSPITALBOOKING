@@ -17,10 +17,7 @@ namespace Programming_Project
 	{
         public bool AccompanyingPerson { get; set; }
         public ClassABed() : base() { }
-        public ClassABed(int wa,  int bn, double dr, bool a,bool ap):base(wa,bn,dr,a)
-        {
-            AccompanyingPerson = ap;
-        }
+        public ClassABed(int wa, int bn, double dr, bool a) : base(wa, bn, dr, a) { }
         public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
             double charge;

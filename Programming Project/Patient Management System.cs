@@ -22,9 +22,8 @@ namespace Programming_Project
             //create list to store registered/ discharged
             //Create list to store beds
             List<Bed> bedsList = new List<Bed>();
+            //Implement csv files into List
             InitData(patientsList, bedsList);
-            //create object for medical record
-            List<Stay> stayList = new List<Stay>();
 
             string i = "1";
 
@@ -71,55 +70,20 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 7. Add Medical Record Entry");
                     DisplayPatients(patientsList);
-                    Console.Write("Enter patient ID number: ");
-                    string pid = Console.ReadLine();
-                    Console.Write("\n Patient temperature: ");
-                    double ptm = Convert.ToDouble(Console.ReadLine());
-                    Console.Write("Please enter patient observation: ");
-                    string pob = Console.ReadLine();
-
-                    foreach (Patient p in patientsList)
-                    {
-                        if (p.Id == pid)
-                        {
-                            MedicalRecord mr = new MedicalRecord(pob,ptm,DateTime.Now);
-                            p.Stay.AddMedicalRecord(mr);
-                            Console.WriteLine("Medical record entry successfully added.");
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error, Patient not found, please try again");
-                            break;
-                        }
-                    }
+                    AddMedicalRecord(patientsList);
                 }
                 else if (i.Equals("8"))
                 {
                     Console.WriteLine("Option 8. View medical records");
-                    DisplayPatients(patientsList);
+                    DisplayPatientsM(patientsList);
                     Console.Write("Enter patient ID number: ");
                     string pid = Console.ReadLine();
                     foreach (Patient p in patientsList)
                     {
                         if (p.Id == pid)
                         {
-                            Console.WriteLine("Name of patient: {0}", p.Name);
-                            Console.WriteLine("ID number: {0}", p.Id);
-                            Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
-                            Console.WriteLine("Gender: {0}", p.Gender);
-                            Console.WriteLine("Status: {0}", p.Status);
-                            Console.WriteLine("\n======Stay======");
-                            Console.WriteLine("Admission Date: {0}",/*p.Stay.AdmittedDate*/DateTime.Now);
-                            Console.WriteLine("Admission Date: {0}", /*p.Stay.DischargedDate*/DateTime.Now);
-                            Console.WriteLine("\n======Record # 1======");
-                            Console.WriteLine("Temperature: ", stayList[1]);
-                            Console.WriteLine("Temperature: ", stayList[0]);
-                            Console.WriteLine("Diagnosis: ", stayList[2]);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error, Patient not found, please try again");
+                            Console.WriteLine("PAtient found: {0}", p.Name);
+                            DisplayMedicalRecord(p);
                             break;
                         }
                     }
@@ -193,7 +157,6 @@ namespace Programming_Project
                 count++;
             }
         }
-
         //display patients
         static void DisplayPatients(List<Patient> pList)
         {
@@ -202,6 +165,18 @@ namespace Programming_Project
             foreach (Patient p in pList)
             {
                 Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", p.Name, p.Id, p.Age, p.Gender, p.CitizenStatus, p.Status);
+            }
+        }
+        static void DisplayPatientsM(List<Patient> pList)
+        {
+            //read lines from patients.csv
+            Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
+            foreach (Patient p in pList)
+            {
+                if (p.Status == "Admitted")
+                {
+                    Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", p.Name, p.Id, p.Age, p.Gender, p.CitizenStatus, p.Status);
+                }
             }
         }
         //InIt List
@@ -250,6 +225,7 @@ namespace Programming_Project
 
             }
 
+            //Read from Beds.csv
             string[] sents = File.ReadAllLines("beds.csv");
 
             for (int l = 1; l < sents.Length; l++)
@@ -257,19 +233,67 @@ namespace Programming_Project
                 string[] sbed = sents[l].Split(',');
                 if (sbed[0] == "A")
                 {
-                    Bed cab = new ClassABed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                    Bed cab = new ClassABed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
                     bList.Add(cab);
                 }
                 else if (sbed[0] == "B")
                 {
-                    Bed cbb = new ClassBBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                    Bed cbb = new ClassBBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
                     bList.Add(cbb);
                 }
                 else if (sbed[0] == "C")
                 {
-                    Bed ccb = new ClassCBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true, false);
+                    Bed ccb = new ClassCBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
                     bList.Add(ccb);
                 }
+            }
+        }
+        static void AddMedicalRecord(List<Patient> patientsList)
+        {
+            Console.Write("Enter patient ID number: ");
+            string pid = Console.ReadLine();
+            Console.Write("\n Patient temperature: ");
+            double ptm = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Please enter patient observation: ");
+            string pob = Console.ReadLine();
+
+            foreach (Patient p in patientsList)
+            {
+                if (p.Id == pid)
+                {
+                    Stay st = new Stay(DateTime.Now, p);
+                    MedicalRecord mr = new MedicalRecord(pob, ptm, DateTime.Now);
+                    st.AddMedicalRecord(mr);
+                    Console.WriteLine("Medical record entry successfully added.");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Error, Patient not found, please try again");
+                    break;
+                }
+            }
+        }
+        static void DisplayMedicalRecord(Patient p)
+        {
+            Console.WriteLine("Name of patient: {0}", p.Name);
+            Console.WriteLine("ID number: {0}", p.Id);
+            Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+            Console.WriteLine("Gender: {0}", p.Gender);
+            Console.WriteLine("Status: {0}", p.Status);
+            Console.WriteLine("\n======Stay ======");
+            Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
+            Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
+
+            int counter = 1;
+            foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
+            {
+                Console.WriteLine("\n======Record # {0}======", counter);
+                Console.WriteLine("Date/Time: ", mr.DatetimeEntered);
+                Console.WriteLine("Temperature: ", mr.Temperature);
+                Console.WriteLine("Diagnosis: ", mr.Diagnosis);
+                counter++;
+
             }
         }
         static void RegisterPatient(List<Patient> pList)
@@ -338,8 +362,6 @@ namespace Programming_Project
                         patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
                         
                     }
-
-
                 }
                 else
                 {
@@ -376,13 +398,13 @@ namespace Programming_Project
             {
                 if (av == "Y")
                 {
-                    Bed cab = new ClassABed(wn, bn, dr, true, false);
+                    Bed cab = new ClassABed(wn, bn, dr, true);
                     blist.Add(cab);
                     Console.WriteLine("Bed added successfully.");
                 }
                 else if (av == "N")
                 {
-                    Bed cab = new ClassABed(wn, bn, dr, false, false);
+                    Bed cab = new ClassABed(wn, bn, dr, false);
                     blist.Add(cab);
                     Console.WriteLine("Bed added successfully.");
                 }
@@ -391,13 +413,13 @@ namespace Programming_Project
             {
                 if (av == "Y")
                 {
-                    Bed cab = new ClassBBed(wn, bn, dr, true, false);
+                    Bed cab = new ClassBBed(wn, bn, dr, true);
                     blist.Add(cab);
                     Console.WriteLine("Bed added successfully.");
                 }
                 else if (av == "N")
                 {
-                    Bed cab = new ClassBBed(wn, bn, dr, false, false);
+                    Bed cab = new ClassBBed(wn, bn, dr, false);
                     blist.Add(cab);
                     Console.WriteLine("Bed added successfully.");
                 }
@@ -406,13 +428,13 @@ namespace Programming_Project
             {
                 if (av == "Y")
                 {
-                    Bed cab = new ClassCBed(wn, bn, dr, true, false);
+                    Bed cab = new ClassCBed(wn, bn, dr, true);
                     blist.Add(cab);
                     Console.WriteLine("Bed added successfully.");
                 }
                 else if (av == "N")
                 {
-                    Bed cab = new ClassCBed(wn, bn, dr, false, false);
+                    Bed cab = new ClassCBed(wn, bn, dr, false);
                     blist.Add(cab);
                     Console.WriteLine("Bed added successfully.");
                 }
@@ -481,13 +503,13 @@ namespace Programming_Project
                 
             }
         }
-        static void RegisterHospitalStay(List<Patient>pList, List<Patient>nList , List<Bed>bList)
+        static void RegisterHospitalStay(List<Patient> pList, List<Patient> nList, List<Bed> bList)
         {
             DisplayPatients(nList);
             Console.Write("Enter patient ID number: ");
             string Patientid = Console.ReadLine();
             // loop through the list and see if there a match
-            
+
             searchPatient(nList, Patientid);
             DisplayBeds(bList);
             Stay NewStay = new Stay();
@@ -498,7 +520,7 @@ namespace Programming_Project
             string[] cal = Date.Split('/');
             DateTime Dates = new DateTime(Convert.ToInt32(cal[2]), Convert.ToInt32(cal[1]), Convert.ToInt32(cal[0]));
             BedStay newbedStay = new BedStay();
-            for (int b = 0;b<bList.Count;b++)
+            for (int b = 0; b < bList.Count; b++)
             {
                 if (bednum - 1 == b)
                 {
@@ -573,7 +595,7 @@ namespace Programming_Project
                             if (n.Id == Patientid)
                             {
 
-                                NewStay = new Stay();
+                                NewStay = new Stay(Dates,n);
 
                                 NewStay.AddBedstay(newbedStay);
                                 n.Status = "Admitted";
@@ -588,16 +610,8 @@ namespace Programming_Project
                         Console.WriteLine("Bed does not exist..");
                         Console.WriteLine("Stay registration unsucessful\n");
                     }
-                    
                 }
             }
-     
-            
-      
-            
-
-
-     
+        }
     }
-    
 }

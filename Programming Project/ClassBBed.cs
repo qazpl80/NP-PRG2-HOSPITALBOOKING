@@ -18,10 +18,7 @@ namespace Programming_Project
         public bool AirCon { get; set; }
 
         public ClassBBed() : base() { }
-        public ClassBBed(int wa, int bn, double dr, bool a, bool ac) : base(wa, bn, dr, a)
-        {
-            AirCon = ac;
-        }
+        public ClassBBed(int wa, int bn, double dr, bool a) : base(wa, bn, dr, a) { }
         public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
             double charges;

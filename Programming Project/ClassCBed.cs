@@ -17,10 +17,7 @@ namespace Programming_Project
     {
         public bool PortableTv { get; set; }
         public ClassCBed():base(){}
-        public ClassCBed(int wa, int bn, double dr, bool a, bool pt) : base(wa, bn, dr, a)
-        {
-            PortableTv = pt;
-        }
+        public ClassCBed(int wa, int bn, double dr, bool a) : base(wa, bn, dr, a) { }
         public override double CalculateCharges(string citizenStatus, int noOfDays) 
         {
             int cost;
