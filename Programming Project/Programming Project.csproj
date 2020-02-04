@@ -53,6 +53,7 @@
     <Compile Include="ClassABed.cs" />
     <Compile Include="ClassBBed.cs" />
     <Compile Include="ClassCBed.cs" />
+    <Compile Include="Currency.cs" />
     <Compile Include="MedicalRecord.cs" />
     <Compile Include="Patient Management System.cs" />
     <Compile Include="Patient.cs" />

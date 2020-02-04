@@ -15,19 +15,19 @@ namespace Programming_Project
 {
     class Adult : Patient
     {
-        public double medisaveBalance { get; set; }
+        public double MedisaveBalance { get; set; }
 
         public Adult(string id, string n, int a, char g, string cs, string s, double m) : base(id, n, a, g, cs, s)
         {
-            medisaveBalance = m;
+            MedisaveBalance = m;
         }
         public new double CalculateCharges()
         {
-            return base.CalculateCharges() - medisaveBalance;
+            return base.CalculateCharges() - MedisaveBalance;
         }
         public override string ToString()
         {
-            return base.ToString() + "\tMedisave Balance : " + medisaveBalance;
+            return base.ToString() + "\tMedisave Balance : " + MedisaveBalance;
         }
     }
 }

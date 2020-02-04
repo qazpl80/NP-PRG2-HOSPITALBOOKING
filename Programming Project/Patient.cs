@@ -32,15 +32,12 @@ namespace Programming_Project
         }
         public double CalculateCharges()
         {
-
             double total = 0;
-            int daysin = 0;
             foreach (BedStay bs in Stay.BedstayList)
             {
-                
                 DateTime admission = bs.StartBedstay;
-                DateTime? discharge = bs.EndBedstay.GetValueOrDefault();
-                daysin = Convert.ToInt32(discharge - admission);
+                DateTime? discharge = bs.EndBedstay;
+                int daysin = (int)(discharge - admission).GetValueOrDefault().TotalDays;
                 Bed bed = bs.Bed;
 
                 if (bed is ClassABed)

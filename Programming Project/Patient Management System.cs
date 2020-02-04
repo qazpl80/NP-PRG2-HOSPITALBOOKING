@@ -59,10 +59,10 @@ namespace Programming_Project
                 else if (i.Equals("5"))
                 {
                     Console.WriteLine("Option 5. Register hospital stay");
-                 
+
                     RegisterHospitalStay(patientsList, bedsList);
 
-                 
+
                 }
                 else if (i.Equals("6"))
                 {
@@ -93,6 +93,7 @@ namespace Programming_Project
                 else if (i.Equals("9"))
                 {
                     Console.WriteLine("Option 9.Transfer Patient to Another Bed");
+                    TransferPatient(patientsList, bedsList);
                 }
                 else if (i.Equals("10"))
                 {
@@ -103,6 +104,7 @@ namespace Programming_Project
                 else if (i.Equals("11"))
                 {
                     Console.WriteLine("Option 11. Display currencies exchange rate");
+                    Currency();
                 }
                 else if (i.Equals("12"))
                 {
@@ -141,7 +143,7 @@ namespace Programming_Project
         //Display Bedlist
         static void DisplayBeds(List<Bed> bedsList)
         {
-            Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}","No", "Ward Type", "Ward No", "Bed No", "Availability", "Daily Rate");
+            Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", "No", "Ward Type", "Ward No", "Bed No", "Availability", "Daily Rate");
             int count = 1;
             foreach (Bed b in bedsList)
             {
@@ -184,7 +186,8 @@ namespace Programming_Project
                     Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", p.Name, p.Id, p.Age, p.Gender, p.CitizenStatus, p.Status);
                 }
             }
-        }  static void DisplayPatientsRetrieve(List<Patient> pList)
+        }
+        static void DisplayPatientsRetrieve(List<Patient> pList)
         {
             //read lines from patients.csv
             Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
@@ -198,7 +201,7 @@ namespace Programming_Project
         }
         //InIt List
 
-        static void InitData(List<Patient> pList, List<Bed>bList)
+        static void InitData(List<Patient> pList, List<Bed> bList)
         {
             // read csv lines from patients
             string[] lines = File.ReadAllLines("patients(1).csv");
@@ -317,7 +320,9 @@ namespace Programming_Project
             Console.Write("Enter patient ID number: ");
             string pid = Console.ReadLine();
             Console.Write("Date of discharge (DD/MM/YYYY): ");
-            DateTime dod = Convert.ToDateTime(Console.ReadLine());
+            string d = Console.ReadLine();
+            string[] d2 = d.Split('/');
+            DateTime dod = new DateTime(Convert.ToInt32(d2[2]), Convert.ToInt32(d2[1]), Convert.ToInt32(d2[0]));
             foreach (Patient p in patientsList)
             {
                 if (p.Id == pid)
@@ -328,128 +333,208 @@ namespace Programming_Project
                     Console.WriteLine("Gender: {0}", p.Gender);
                     Console.WriteLine("Status: {0}", p.Status);
                     Console.WriteLine("\n======Stay ======");
-                    Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
-                    Console.WriteLine("Discharge Date: {0}", dod);
+                    Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate.ToString("dd/MM/yyyy"));
+                    Console.WriteLine("Discharge Date: {0}", dod.ToString("dd/MM/yyyy"));
+                    p.Stay.BedstayList[p.Stay.BedstayList.Count - 1].EndBedstay = dod;
+                    p.Stay.BedstayList[p.Stay.BedstayList.Count - 1].Bed.Available = true;
                     p.Stay.DischargedDate = dod;
                     p.Stay.IsPaid = false;
                     int count = 1;
                     foreach (BedStay bs in p.Stay.BedstayList)
                     {
-                        Console.WriteLine("\n======Bed # {0} ======",count);
+                        Console.WriteLine("\n======Bed # {0} ======", count);
                         Console.WriteLine("Ward number: {0}", bs.Bed.WardNo);
                         Console.WriteLine("Bed number: {0}", bs.Bed.BedNo);
-                        Console.WriteLine("Ward Class: {0}", "A");
-                        Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
-                        Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
+                        string ward;
+                        string extra;
                         if (bs.Bed is ClassABed)
                         {
                             ClassABed cab = (ClassABed)bs.Bed;
-                            Console.WriteLine("Accompanying Person: ", cab.AccompanyingPerson);
-                            double totalcost = p.CalculateCharges();
+                            ward = "A";
+                            if (cab.AccompanyingPerson == true)
+                                extra = "Accompanying person: True";
+                            else
+                                extra = "Accompanying person: False";
                         }
                         else if (bs.Bed is ClassBBed)
                         {
                             ClassBBed cbb = (ClassBBed)bs.Bed;
-                            Console.WriteLine("AirCon: ", cbb.AirCon);
-                            double totalcost = p.CalculateCharges();
+                            ward = "B";
+                            if (cbb.AirCon == true)
+                                extra = "Air-Con: True";
+                            else
+                                extra = "Air-Con: False";
                         }
-                        else if (bs.Bed is ClassCBed)
+                        else
                         {
                             ClassCBed ccb = (ClassCBed)bs.Bed;
-                            Console.WriteLine("Avaliable: ", ccb.Available);
-                            double totalcost = p.CalculateCharges();
+                            ward = "C";
+                            if (ccb.PortableTv == true)
+                                extra = "Portable TV: True";
+                            else
+                                extra = "Portable TV: False";
                         }
-                        int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
-                        Console.WriteLine("Number of days stayed: ",daysDiff);
+                        Console.WriteLine("Ward class: " + ward);
+                        Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay.ToString("dd/MM/yyyy"));
+                        Console.WriteLine("End of bed stay: {0}", bs.EndBedstay.Value.ToString("dd/MM/yyyy"));
+                        Console.WriteLine(extra);
+                        int daysDiff = (bs.EndBedstay.Value - bs.StartBedstay).Days;
+                        Console.WriteLine("Number of days stayed: " + daysDiff);
                         count++;
                     }
-
+                    Console.WriteLine("==========");
+                    double p1 = p.CalculateCharges();
+                    Console.WriteLine("Total charges pending: $ " + p1);
+                    double value = 0;
+                    double deduct = 0;
+                    if (p is Adult)
+                    {
+                        Adult a = (Adult)p;
+                        value = a.MedisaveBalance;
+                        if (value < p1)
+                        {
+                            deduct = value;
+                            a.MedisaveBalance = 0;
+                        }
+                        else if (value > p1)
+                        {
+                            deduct = value - p1;
+                            a.MedisaveBalance = deduct;
+                        }
+                        Console.WriteLine("Medisave Balance: $ " + value);
+                        Console.WriteLine("To deduct from Medisave Balance: $ " + deduct);
+                        Console.WriteLine("Sub-total: $ " + deduct);
+                        Console.WriteLine("\n[Press any key to proceed with payment]");
+                        Console.ReadKey();
+                        Console.WriteLine("\nCommencing payment...\n");
+                        Console.WriteLine("$ {0} has been deducted from Medisave Balance", deduct);
+                        Console.WriteLine("\nNew Medisave Balance: $ " + a.MedisaveBalance);
+                        Console.WriteLine("Sub-total: $ {0} has been paid by cash", deduct);
+                        Console.WriteLine("\nPayment successful!");
+                    }
+                    else if (p is Child)
+                    {
+                        Child c = (Child)p;
+                        value = c.CdaBalance;
+                        if (value < p1)
+                        {
+                            deduct = value;
+                            c.CdaBalance = 0;
+                        }
+                        else if (value > p1)
+                        {
+                            deduct = value - p1;
+                            c.CdaBalance = deduct;
+                        }
+                        Console.WriteLine("Medisave Balance: $ " + value);
+                        Console.WriteLine("To deduct from Medisave Balance: $ " + deduct);
+                        Console.WriteLine("Sub-total: $ " + deduct);
+                        Console.WriteLine("\n[Press any key to proceed with payment]");
+                        Console.ReadKey();
+                        Console.WriteLine("\nCommencing payment...\n");
+                        Console.WriteLine("$ {0} has been deducted from Medisave Balance", deduct);
+                        Console.WriteLine("\nNew Medisave Balance: $ " + c.CdaBalance);
+                        Console.WriteLine("Sub-total: $ {0} has been paid by cash", deduct);
+                        Console.WriteLine("\nPayment successful!");
+                    }
+                    else
+                    {
+                        Senior s = (Senior)p;
+                        double price = s.CalculateCharges();
+                        Console.WriteLine("Sub-total: $ " + price);
+                        Console.WriteLine("\n[Press any key to proceed with payment]");
+                        Console.ReadKey();
+                        Console.WriteLine("\nCommencing payment...\n");
+                        Console.WriteLine("\nPayment successful!");
+                    }
+                    p.Status = "Discharged";
                 }
             }
         }
         static void RegisterPatient(List<Patient> pList)
         {
-            
+
             string patientdeets;
             Console.Write("Enter Name: ");
-           
+
             string name = Console.ReadLine();
-           
+
             Console.Write("Enter Identification Number: ");
             string Idn = Console.ReadLine();
             Console.Write("Enter Age: ");
             int age = 0;
             try
             {
-               age = Convert.ToInt32(Console.ReadLine());
-            
-            
-            Console.Write("Enter Gender [M/F]: ");
-            char gender = Convert.ToChar(Console.ReadLine().ToUpper());
-            Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
-            string citizenship = Console.ReadLine();
-            using (StreamWriter file = new StreamWriter("patients(1).csv",true))
+                age = Convert.ToInt32(Console.ReadLine());
+
+
+                Console.Write("Enter Gender [M/F]: ");
+                char gender = Convert.ToChar(Console.ReadLine().ToUpper());
+                Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
+                string citizenship = Console.ReadLine();
+                using (StreamWriter file = new StreamWriter("patients(1).csv", true))
+                {
+                    if (age <= 12)
+                    {
+                        //if child is sc create patient child object with cdabalance
+                        if (citizenship == "SC")
+                        {
+                            Console.Write("Enter Child Development Account Balance: ");
+                            double balance = Convert.ToDouble(Console.ReadLine());
+                            Patient c1 = new Child(Idn, name, age, gender, citizenship, "Registered", balance);
+                            pList.Add(c1);
+                            patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + balance;
+
+                        }
+                        //if child is not SC , no cdabalance
+                        else
+                        {
+                            Patient c1 = new Child(Idn, name, age, gender, citizenship, "Registered", 0);
+                            pList.Add(c1);
+                            patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
+
+                        }
+                    }
+                    else if (age < 64)
+                    {
+                        if (citizenship == "SC" || citizenship == "PR")
+                        {
+                            Console.Write("Enter Medisave Balance: ");
+                            double medisave = Convert.ToDouble(Console.ReadLine());
+                            Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", medisave);
+                            pList.Add(a1);
+                            patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + medisave;
+
+
+
+                        }
+                        else
+                        {
+                            Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", 0);
+                            pList.Add(a1);
+
+
+                            patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
+
+                        }
+                    }
+                    else
+                    {
+                        Patient s1 = new Senior(Idn, name, age, gender, citizenship, "Registered");
+                        pList.Add(s1);
+
+
+                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
+
+                    }
+                    file.WriteLine(patientdeets);
+                    Console.WriteLine("{0} is registered successfully", name);
+
+                }
+            }
+            catch
             {
-                if (age <= 12)
-                {
-                    //if child is sc create patient child object with cdabalance
-                    if (citizenship == "SC")
-                    {
-                        Console.Write("Enter Child Development Account Balance: ");
-                        double balance = Convert.ToDouble(Console.ReadLine());
-                        Patient c1 = new Child(Idn, name, age, gender, citizenship, "Registered", balance);
-                        pList.Add(c1);
-                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + balance;
-                       
-                    }
-                    //if child is not SC , no cdabalance
-                    else
-                    {
-                        Patient c1 = new Child(Idn, name, age, gender, citizenship, "Registered", 0);
-                        pList.Add(c1);
-                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
-                       
-                    }
-                }
-                else if (age < 64)
-                {
-                    if (citizenship == "SC" || citizenship == "PR")
-                    {
-                        Console.Write("Enter Medisave Balance: ");
-                        double medisave = Convert.ToDouble(Console.ReadLine());
-                        Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", medisave);
-                        pList.Add(a1);
-                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + medisave;
-                        
-
-
-                    }
-                    else
-                    {
-                        Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", 0);
-                        pList.Add(a1);
-
-
-                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
-                        
-                    }
-                }
-                else
-                {
-                    Patient s1 = new Senior(Idn, name, age, gender, citizenship, "Registered");
-                    pList.Add(s1);
-
-
-                    patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
-                    
-                }
-                file.WriteLine(patientdeets);
-                Console.WriteLine("{0} is registered successfully", name);
-                
-            }
-            }
-            catch{
-                Console.WriteLine("{0} is not registered successfully",name);
+                Console.WriteLine("{0} is not registered successfully", name);
             }
         }
         static void Addnewbed(List<Bed> blist)
@@ -512,7 +597,7 @@ namespace Programming_Project
             }
 
         }
-        static void retrievePatient(List<Patient> pList,List<Bed>bList)
+        static void retrievePatient(List<Patient> pList, List<Bed> bList)
         {
             string wardClass = "";
             DisplayPatients(pList);
@@ -520,8 +605,6 @@ namespace Programming_Project
             string id = Console.ReadLine();
             foreach (Patient p in pList)
             {
-                
-
                 if (p.Id == id)
                 {
                     string pay = "";
@@ -534,16 +617,16 @@ namespace Programming_Project
                     {
                         pay = "Paid";
                     }
-                    Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}",p.Stay.AdmittedDate.ToString("dd/MM/yyyy"),p.Stay.DischargedDate,pay);
+                    Console.WriteLine("Admission Date: {0}\nDischarge Date: {1}\nPayment Status: {2}", p.Stay.AdmittedDate.ToString("dd/MM/yyyy"), p.Stay.DischargedDate, pay);
                     Console.WriteLine("======");
 
                     foreach (BedStay bs in p.Stay.BedstayList)
                     {
-                        if(bs.Bed is ClassABed)
+                        if (bs.Bed is ClassABed)
                         {
                             wardClass = "A";
                         }
-                        else if(bs.Bed is ClassBBed)
+                        else if (bs.Bed is ClassBBed)
                         {
                             wardClass = "B";
                         }
@@ -552,34 +635,29 @@ namespace Programming_Project
                             wardClass = "C";
                         }
                         Console.WriteLine("Ward Number: {0}\nBed Number: {1}\nWard Class: {2}\nStart of Bed Stay: {3}\nEnd of Bed Stay: {4}", bs.Bed.WardNo, bs.Bed.BedNo, wardClass, bs.StartBedstay.ToString("dd/MM/yyyy"), bs.EndBedstay);
-
-
-
-
                     }
-                    break;
                 }
-                else
-                    Console.WriteLine("Patient Not Found, Please try again...");
-                
+                break;
             }
+
         }
-      
+
         static void RegisterHospitalStay(List<Patient> pList, List<Bed> bList)
         {
             DisplayPatientsRetrieve(pList);
-      
+
             Console.Write("Enter patient ID number: ");
             string Patientid = Console.ReadLine();
-         
+
 
             DisplayBeds(bList);
             Console.Write("\nSelect bed to stay: ");
             int bednum = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter Date of Admission (DD/MM/YYYY): ");
-            DateTime Dates = Convert.ToDateTime(Console.ReadLine());
-          
-           
+            string d = Console.ReadLine();
+            string[] d2 = d.Split('/');
+            DateTime Dates = new DateTime(Convert.ToInt32(d2[2]), Convert.ToInt32(d2[1]), Convert.ToInt32(d2[0]));
+
             BedStay newbedStay = new BedStay();
             Bed b = bList[bednum - 1];
 
@@ -658,16 +736,14 @@ namespace Programming_Project
                 {
                     if (p.Id == Patientid)
                     {
-
-                        Stay NewStay = new Stay(Dates,p);
-
+                        Stay NewStay = new Stay(Dates, p);
                         NewStay.AddBedstay(newbedStay);
                         p.Stay = NewStay;
                         p.Status = "Admitted";
-                        Console.WriteLine("Testing: Patient {0}", p.Stay.AdmittedDate);
 
                     }
                 }
+                b.Available = false;
                 Console.WriteLine("\n\nStay registration successful!\n");
 
             }
@@ -677,8 +753,8 @@ namespace Programming_Project
                 Console.WriteLine("Stay registration unsucessful\n");
             }
         }
-          
-        static void TransferPatient(List<Patient>pList,List<Bed>bList)
+
+        static void TransferPatient(List<Patient> pList, List<Bed> bList)
         {
             DisplayPatientsM(pList);
             Console.Write("Enter patientID number: ");
@@ -687,17 +763,98 @@ namespace Programming_Project
             Console.Write("Select bed to transfer: ");
             int num = Convert.ToInt32(Console.ReadLine());
             BedStay bedStay = new BedStay();
-            DateTime Transfer = Convert.ToDateTime(Console.ReadLine());
+            Console.Write("Date of Transfer (DD/MM/YYYY): ");
+            string d = Console.ReadLine();
+            string[] d2 = d.Split('/');
+            DateTime Transfer = new DateTime(Convert.ToInt32(d2[2]), Convert.ToInt32(d2[1]), Convert.ToInt32(d2[0]));
             Bed N = bList[num - 1];
-            if(N.Available != false)
+            if (N.Available != false)
             {
                 if (N is ClassABed)
                 {
+                    ClassABed ba = (ClassABed)N;
+                    Console.Write("Any accompanying guest?(Additional $100 per day)[Y/N]: ");
+                    string answer = Console.ReadLine().ToUpper();
 
+                    if (answer == "Y")
+                    {
+                        ba.AccompanyingPerson = true;
+                        bedStay = new BedStay(Transfer, ba);
+
+                    }
+                    else if (answer == "N")
+                    {
+                        ba.AccompanyingPerson = false;
+                        bedStay = new BedStay(Transfer, ba);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incorrect Input, Please Try again...");
+
+                    }
                 }
+                else if (N is ClassBBed)
+                {
+                    ClassBBed bb = (ClassBBed)N;
+                    Console.Write("Is AirCon needed (Additional $50 per week)? [Y/N]: ");
+                    string answer = Console.ReadLine().ToUpper();
+                    if (answer == "Y")
+                    {
+                        bb.AirCon = true;
+                        bedStay = new BedStay(Transfer, bb);
+
+                    }
+                    else if (answer == "N")
+                    {
+                        bb.AirCon = false;
+                        bedStay = new BedStay(Transfer, bb);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incorrect Input, Please Try again...");
+
+                    }
+                }
+                else
+                {
+                    ClassCBed bc = (ClassCBed)N;
+                    Console.Write("Is a portable TV required (Additional $30 one time cost) [Y/N]: ");
+                    string answer = Console.ReadLine().ToUpper();
+                    if (answer == "Y")
+                    {
+                        bc.PortableTv = true;
+                        bedStay = new BedStay(Transfer, bc);
+
+                    }
+                    else if (answer == "N")
+                    {
+                        bc.PortableTv = false;
+                        bedStay = new BedStay(Transfer, bc);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incorrect Input, Please Try again...");
+
+                    }
+                }
+                foreach (Patient p in pList)
+                {
+                    if (p.Id == p_ID)
+                    {
+                        p.Stay.BedstayList[p.Stay.BedstayList.Count - 1].EndBedstay = Transfer;
+                        p.Stay.BedstayList[p.Stay.BedstayList.Count - 1].Bed.Available = true;
+                        Console.WriteLine("{0} will be transferred to Ward {1} Bed {2} on {3}", p.Name, N.WardNo, N.BedNo, Transfer.ToString("dd/MM/yyyy"));
+                        p.Stay.AddBedstay(bedStay);
+                    }
+                }
+                N.Available = false;
+
             }
 
+        }
 
+        static void APIPM()
+        {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.data.gov.sg");
@@ -719,8 +876,38 @@ namespace Programming_Project
                     Console.WriteLine("North: " + item.readings.pm25_one_hourly.north);
                     Console.WriteLine("South: " + item.readings.pm25_one_hourly.south);
 
+
                 }
             }
         }
+        static void Currency()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://api.exchangerate-api.com/");
+                //HTTP GET
+                Task<HttpResponseMessage> responseTask = client.GetAsync("/v1/latest/SGD");
+                responseTask.Wait();
+                HttpResponseMessage result = responseTask.Result;
+                //if successful, read string and print
+                if (result.IsSuccessStatusCode)
+                {
+                    Task<string> readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+
+                    string info = readTask.Result;
+                   
+
+                    // header
+                    Console.WriteLine("\n============================3.1 Display currencies exchange rate=================================\n");
+                    Console.WriteLine("Base: Singaporea Dollars(SGD)");
+                    Console.WriteLine("Date: ",objectt)
+
+                }
+
+
+            }
+        }
+
     }
 }
