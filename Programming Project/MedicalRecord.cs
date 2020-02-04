@@ -17,6 +17,8 @@ namespace Programming_Project
         public string Diagnosis { get; set; }
         public double Temperature { get; set; }
         public DateTime DatetimeEntered { get; set; }
+
+        public MedicalRecord() { }
         public MedicalRecord(string d , double t, DateTime dte)
         {
             Diagnosis = d;

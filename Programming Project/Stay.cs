@@ -15,17 +15,15 @@ namespace Programming_Project
 	{
         public DateTime AdmittedDate { get; set; }  
         public DateTime? DischargedDate { get; set; }
-        public string AdmittedBy { get; set; }
         public bool IsPaid { get; set; }
         public List<MedicalRecord> MedicalRecordList { get; set; } = new List<MedicalRecord>();
         public List<BedStay> BedstayList { get; set; } = new List<BedStay>();
         public Patient Patient { get; set; }
 
-        public Stay(DateTime ad , DateTime? dd, string ab, Patient p)
+        public Stay() { }
+        public Stay(DateTime ad , Patient p)
         {
             AdmittedDate = ad;
-            DischargedDate = dd;
-            AdmittedBy = ab;
             Patient = p;
         }
         public void AddMedicalRecord(MedicalRecord mr)
@@ -40,7 +38,6 @@ namespace Programming_Project
         {
             return "AdmittedDate: " + AdmittedDate +
                 "\tDischargedDate: " + DischargedDate +
-                "\tAdmittedBy: " + AdmittedBy +
                 Patient;
         }
     }

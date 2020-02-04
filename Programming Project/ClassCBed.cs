@@ -13,9 +13,10 @@ using System.Threading.Tasks;
 
 namespace Programming_Project
 {
-	class ClassCBed: Bed
-	{
+    class ClassCBed : Bed
+    {
         public bool PortableTv { get; set; }
+        public ClassCBed():base(){}
         public ClassCBed(int wa, int bn, double dr, bool a, bool pt) : base(wa, bn, dr, a)
         {
             PortableTv = pt;

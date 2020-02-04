@@ -18,6 +18,7 @@ namespace Programming_Project
         public double DailyRate { get; set; }
         public bool Available { get; set; }
 
+        public Bed() { }
         public Bed(int wn , int bn,double dr, bool a)
         {
             WardNo = wn;

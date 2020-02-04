@@ -16,6 +16,7 @@ namespace Programming_Project
 	class ClassABed:Bed
 	{
         public bool AccompanyingPerson { get; set; }
+        public ClassABed() : base() { }
         public ClassABed(int wa,  int bn, double dr, bool a,bool ap):base(wa,bn,dr,a)
         {
             AccompanyingPerson = ap;

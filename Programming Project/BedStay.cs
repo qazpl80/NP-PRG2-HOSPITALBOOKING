@@ -17,10 +17,10 @@ namespace Programming_Project
         public DateTime? EndBedstay { get; set; }
         public  Bed Bed { get; set; }
 
-        public BedStay(DateTime sbs, DateTime? ebs, Bed b)
+        public BedStay() { }
+        public BedStay(DateTime sbs, Bed b)
         {
             StartBedstay = sbs;
-            EndBedstay = ebs;
             Bed = b;
         }
         public override string ToString()
