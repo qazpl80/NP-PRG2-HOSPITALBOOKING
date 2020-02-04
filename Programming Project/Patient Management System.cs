@@ -326,13 +326,47 @@ namespace Programming_Project
                     Console.WriteLine("\n======Stay ======");
                     Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
                     Console.WriteLine("Discharge Date: {0}", dod);
-                    int count = 1;
                     p.Stay.IsPaid = false;
                     foreach (Bed b in bedsList)
                     {
-                        Console.WriteLine("\n======Bed # {0} ======");
+                        if (b is ClassABed)
+                        {
+                            Console.WriteLine("\n======Bed # 1 ======");
+                            Console.WriteLine("Ward number: ", b.WardNo);
+                            Console.WriteLine("Bed number: ", b.BedNo);
+                            Console.WriteLine("Ward Class: ", "A");
+                            foreach (BedStay bs in p.Stay.BedstayList)
+                            {
+                                Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
+                                Console.WriteLine("End of bed stay: ", bs.EndBedstay);
+                            }
 
-                        
+                        }
+                        else if (b is ClassBBed)
+                        {
+                            Console.WriteLine("\n======Bed # 1 ======");
+                            Console.WriteLine("Ward number: ", b.WardNo);
+                            Console.WriteLine("Bed number: ", b.BedNo);
+                            Console.WriteLine("Ward Class: ", "B");
+                            foreach (BedStay bs in p.Stay.BedstayList)
+                            {
+                                Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
+                                Console.WriteLine("End of bed stay: ", bs.EndBedstay);
+                                Console.WriteLine("Accompanying person: ",);
+                            }
+                        }
+                        else if (b is ClassCBed)
+                        {
+                            Console.WriteLine("\n======Bed # 1 ======");
+                            Console.WriteLine("Ward number: ", b.WardNo);
+                            Console.WriteLine("Bed number: ", b.BedNo);
+                            Console.WriteLine("Ward Class: ", "C");
+                            foreach (BedStay bs in p.Stay.BedstayList)
+                            {
+                                Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
+                                Console.WriteLine("End of bed stay: ", bs.EndBedstay);
+                            }
+                        }
                     }
                 }
             }
