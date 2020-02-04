@@ -98,7 +98,7 @@ namespace Programming_Project
                 {
                     Console.WriteLine("Option 10. Discharge and payment");
                     DisplayPatientsM(patientsList);
-                    dischargepayment(patientsList);
+                    Dischargepayment(patientsList);
                 }
                 else if (i.Equals("11"))
                 {
@@ -107,41 +107,14 @@ namespace Programming_Project
                 else if (i.Equals("12"))
                 {
                     Console.WriteLine("Option 12. Display PM 2.5 information");
+                    //ADVANCE FEATURES
+                    APIPM();
                 }
                 else
                 {
                     Console.WriteLine("Invalid Option, Please Try Again.");
                 }
             }
-            //ADVANCE FEATURES
-            //List<> booklist;
-
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri("http://ictonejourney.com");
-
-            //    //http GET
-            //    Task<HttpResponseMessage> respondTask = client.GetAsync("/api/books");
-            //    respondTask.Wait();
-
-            //    HttpResponseMessage result = respondTask.Result;
-            //    if (result.IsSuccessStatusCode)
-            //    {
-            //        Task<string> readTask = result.Content.ReadAsStringAsync(); //Serialize to string
-            //        readTask.Wait();
-
-            //        string data = readTask.Result;
-            //        booklist = JsonConvert.DeserializeObject<List<Book>>(data); //deserialize to Json to List<Book>
-
-            //        foreach (Book b in booklist)
-            //        {
-            //            Console.WriteLine("{0,2} {1,13} {2,-65} {3,20} {4,4} {5,3}",
-            //                b.Id, b.Isbn, b.Title, b.Author, b.Pages, b.Qty);
-
-            //            //Console.WriteLine(b);
-            //        }
-            //  }
-            //}
         }
         //display menu
         static void DisplayMenu()
@@ -339,12 +312,12 @@ namespace Programming_Project
                 counter++;
             }
         }
-        static void dischargepayment(List<Patient> patientsList)
+        static void Dischargepayment(List<Patient> patientsList)
         {
             Console.Write("Enter patient ID number: ");
             string pid = Console.ReadLine();
             Console.Write("Date of discharge (DD/MM/YYYY): ");
-            string dod = Console.ReadLine();
+            DateTime dod = Convert.ToDateTime(Console.ReadLine());
             foreach (Patient p in patientsList)
             {
                 if (p.Id == pid)
@@ -357,16 +330,17 @@ namespace Programming_Project
                     Console.WriteLine("\n======Stay ======");
                     Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
                     Console.WriteLine("Discharge Date: {0}", dod);
+                    p.Stay.DischargedDate = dod;
                     p.Stay.IsPaid = false;
                     int count = 1;
                     foreach (BedStay bs in p.Stay.BedstayList)
                     {
                         Console.WriteLine("\n======Bed # {0} ======",count);
-                        Console.WriteLine("Ward number: ", bs.Bed.WardNo);
-                        Console.WriteLine("Bed number: ", bs.Bed.BedNo);
-                        Console.WriteLine("Ward Class: ", "A");
-                        Console.WriteLine("Start of bed stay: ", bs.StartBedstay);
-                        Console.WriteLine("End of bed stay: ", bs.EndBedstay);
+                        Console.WriteLine("Ward number: {0}", bs.Bed.WardNo);
+                        Console.WriteLine("Bed number: {0}", bs.Bed.BedNo);
+                        Console.WriteLine("Ward Class: {0}", "A");
+                        Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
+                        Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
                         if (bs.Bed is ClassABed)
                         {
                             ClassABed cab = (ClassABed)bs.Bed;
@@ -702,10 +676,33 @@ namespace Programming_Project
             string p_ID = Console.ReadLine();
             DisplayBeds(bList);
             Console.Write("Select bed to transfer: ");
-            
-            
+        }
+        static void APIPM()
+        {
 
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://api.data.gov.sg");
+                Task<HttpResponseMessage> responseTask = client.GetAsync("/v1/environment/pm25");
+                responseTask.Wait();
+                HttpResponseMessage result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    Task<string> readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+                    string data = readTask.Result;
+                    RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(data);
+                    Item item = rootObject.items[0];
+                    Console.WriteLine("\n============================3.2 Display the PM 2.5 information=================================\n");
+                    Console.WriteLine("Timestamp: " + item.timestamp + "\n");
+                    Console.WriteLine("West: " + item.readings.pm25_one_hourly.west);
+                    Console.WriteLine("East: " + item.readings.pm25_one_hourly.east);
+                    Console.WriteLine("Central: " + item.readings.pm25_one_hourly.central);
+                    Console.WriteLine("North: " + item.readings.pm25_one_hourly.north);
+                    Console.WriteLine("South: " + item.readings.pm25_one_hourly.south);
 
+                }
+            }
         }
     }
 }
