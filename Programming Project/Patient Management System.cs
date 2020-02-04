@@ -160,6 +160,10 @@ namespace Programming_Project
                     ClassCBed ccb = (ClassCBed)b;
                     Console.WriteLine("{0,-10}{1,-15}{2,-10}{3,-10}{4,-15}{5,-15}", count, "C", ccb.WardNo, ccb.BedNo, ccb.Available, ccb.DailyRate);
                 }
+                else
+                {
+                    Console.WriteLine("Bed not found");
+                }
                 count++;
             }
         }
@@ -243,130 +247,158 @@ namespace Programming_Project
             }
 
             //Read from Beds.csv
-            string[] sents = File.ReadAllLines("beds.csv");
-
-            for (int l = 1; l < sents.Length; l++)
+            try
             {
-                string[] sbed = sents[l].Split(',');
-                if (sbed[0] == "A")
+                string[] sents = File.ReadAllLines("beds.csv");
+
+                for (int l = 1; l < sents.Length; l++)
                 {
-                    Bed cab = new ClassABed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
-                    bList.Add(cab);
+                    string[] sbed = sents[l].Split(',');
+                    if (sbed[0] == "A")
+                    {
+                        Bed cab = new ClassABed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
+                        bList.Add(cab);
+                    }
+                    else if (sbed[0] == "B")
+                    {
+                        Bed cbb = new ClassBBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
+                        bList.Add(cbb);
+                    }
+                    else if (sbed[0] == "C")
+                    {
+                        Bed ccb = new ClassCBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
+                        bList.Add(ccb);
+                    }
                 }
-                else if (sbed[0] == "B")
-                {
-                    Bed cbb = new ClassBBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
-                    bList.Add(cbb);
-                }
-                else if (sbed[0] == "C")
-                {
-                    Bed ccb = new ClassCBed(Convert.ToInt32(sbed[1]), Convert.ToInt32(sbed[2]), Convert.ToDouble(sbed[4]), true);
-                    bList.Add(ccb);
-                }
+            }
+            catch
+            {
+                Console.WriteLine("Unable to Read File/File does not exist");
             }
         }
         static void AddMedicalRecord(List<Patient> patientsList)
         {
-            Console.Write("Enter patient ID number: ");
-            string pid = Console.ReadLine();
-            Console.Write("\n Patient temperature: ");
-            double ptm = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Please enter patient observation: ");
-            string pob = Console.ReadLine();
-
-            foreach (Patient p in patientsList)
+            try
             {
-                if (p.Id == pid)
+                Console.Write("Enter patient ID number: ");
+                string pid = Console.ReadLine();
+                Console.Write("\n Patient temperature: ");
+                double ptm = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Please enter patient observation: ");
+                string pob = Console.ReadLine();
+
+                foreach (Patient p in patientsList)
                 {
-                    Stay st = new Stay(DateTime.Now, p);
-                    MedicalRecord mr = new MedicalRecord(pob, ptm, DateTime.Now);
-                    p.Stay = st;
-                    st.AddMedicalRecord(mr);
-                    Console.WriteLine("Medical record entry successfully added.");
-                    break;
+                    if (p.Id == pid)
+                    {
+                        Stay st = new Stay(DateTime.Now, p);
+                        MedicalRecord mr = new MedicalRecord(pob, ptm, DateTime.Now);
+                        p.Stay = st;
+                        st.AddMedicalRecord(mr);
+                        Console.WriteLine("Medical record entry successfully added.");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error, Patient not found, please try again");
+                        break;
+                    }
                 }
-                else
-                {
-                    Console.WriteLine("Error, Patient not found, please try again");
-                    break;
-                }
+            }
+            catch
+            {
+                Console.WriteLine("Invalid Input. Please try again.");
             }
         }
         static void DisplayMedicalRecord(Patient p)
         {
-            Console.WriteLine("Name of patient: {0}", p.Name);
-            Console.WriteLine("ID number: {0}", p.Id);
-            Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
-            Console.WriteLine("Gender: {0}", p.Gender);
-            Console.WriteLine("Status: {0}", p.Status);
-            Console.WriteLine("\n======Stay ======");
-            Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate.ToString("dd/MM/yyyy"));
-            Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
-            int counter = 1;
-            foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
+            try
             {
-                Console.WriteLine("\n======Record # {0}======", counter);
-                Console.WriteLine("Date/Time: {0}", mr.DatetimeEntered);
-                Console.WriteLine("Temperature: {0}", mr.Temperature);
-                Console.WriteLine("Diagnosis: {0}", mr.Diagnosis);
-                counter++;
+                Console.WriteLine("Name of patient: {0}", p.Name);
+                Console.WriteLine("ID number: {0}", p.Id);
+                Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+                Console.WriteLine("Gender: {0}", p.Gender);
+                Console.WriteLine("Status: {0}", p.Status);
+                Console.WriteLine("\n======Stay ======");
+                Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate.ToString("dd/MM/yyyy"));
+                Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
+                int counter = 1;
+                foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
+                {
+                    Console.WriteLine("\n======Record # {0}======", counter);
+                    Console.WriteLine("Date/Time: {0}", mr.DatetimeEntered);
+                    Console.WriteLine("Temperature: {0}", mr.Temperature);
+                    Console.WriteLine("Diagnosis: {0}", mr.Diagnosis);
+                    counter++;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Unable to Display Medical Record for Patient");
             }
         }
         static void Dischargepayment(List<Patient> patientsList)
         {
-            Console.Write("Enter patient ID number: ");
-            string pid = Console.ReadLine();
-            Console.Write("Date of discharge (DD/MM/YYYY): ");
-            string dod1 = Console.ReadLine();
-            DateTime dod = Convert.ToDateTime(dod1);
-            foreach (Patient p in patientsList)
+            try
             {
-                if (p.Id == pid)
+                Console.Write("Enter patient ID number: ");
+                string pid = Console.ReadLine();
+                Console.Write("Date of discharge (DD/MM/YYYY): ");
+                string dod1 = Console.ReadLine();
+                DateTime dod = Convert.ToDateTime(dod1);
+                foreach (Patient p in patientsList)
                 {
-                    Console.WriteLine("Name of patient: {0}", p.Name);
-                    Console.WriteLine("ID number: {0}", p.Id);
-                    Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
-                    Console.WriteLine("Gender: {0}", p.Gender);
-                    Console.WriteLine("Status: {0}", p.Status);
-                    Console.WriteLine("\n======Stay ======");
-                    Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
-                    Console.WriteLine("Discharge Date: {0}", dod);
-                    p.Stay.DischargedDate = dod;
-                    p.Stay.IsPaid = false;
-                    int count = 1;
-                    foreach (BedStay bs in p.Stay.BedstayList)
+                    if (p.Id == pid)
                     {
-                        int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
-                        Console.WriteLine("\n======Bed # {0} ======",count);
-                        Console.WriteLine("Ward number: {0}", bs.Bed.WardNo);
-                        Console.WriteLine("Bed number: {0}", bs.Bed.BedNo);
-                        Console.WriteLine("Ward Class: {0}", "A");
-                        //Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
-                        //Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
-                        if (bs.Bed is ClassABed)
+                        Console.WriteLine("Name of patient: {0}", p.Name);
+                        Console.WriteLine("ID number: {0}", p.Id);
+                        Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+                        Console.WriteLine("Gender: {0}", p.Gender);
+                        Console.WriteLine("Status: {0}", p.Status);
+                        Console.WriteLine("\n======Stay ======");
+                        Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
+                        Console.WriteLine("Discharge Date: {0}", dod);
+                        p.Stay.DischargedDate = dod;
+                        p.Stay.IsPaid = false;
+                        int count = 1;
+                        foreach (BedStay bs in p.Stay.BedstayList)
                         {
-                            ClassABed cab = (ClassABed)bs.Bed;
-                            Console.WriteLine("Accompanying Person: ", cab.AccompanyingPerson);
-                            bs.Bed.CalculateCharges(p.CitizenStatus,daysDiff);
+                            int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
+                            Console.WriteLine("\n======Bed # {0} ======", count);
+                            Console.WriteLine("Ward number: {0}", bs.Bed.WardNo);
+                            Console.WriteLine("Bed number: {0}", bs.Bed.BedNo);
+                            Console.WriteLine("Ward Class: {0}", "A");
+                            //Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
+                            //Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
+                            if (bs.Bed is ClassABed)
+                            {
+                                ClassABed cab = (ClassABed)bs.Bed;
+                                Console.WriteLine("Accompanying Person: ", cab.AccompanyingPerson);
+                                bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
+                            }
+                            else if (bs.Bed is ClassBBed)
+                            {
+                                ClassBBed cbb = (ClassBBed)bs.Bed;
+                                Console.WriteLine("AirCon: ", cbb.AirCon);
+                                bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
+                            }
+                            else if (bs.Bed is ClassCBed)
+                            {
+                                ClassCBed ccb = (ClassCBed)bs.Bed;
+                                Console.WriteLine("Avaliable: ", ccb.Available);
+                                bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
+                            }
+                            Console.WriteLine("Number of days stayed: ", daysDiff);
+                            count++;
                         }
-                        else if (bs.Bed is ClassBBed)
-                        {
-                            ClassBBed cbb = (ClassBBed)bs.Bed;
-                            Console.WriteLine("AirCon: ", cbb.AirCon);
-                            bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
-                        }
-                        else if (bs.Bed is ClassCBed)
-                        {
-                            ClassCBed ccb = (ClassCBed)bs.Bed;
-                            Console.WriteLine("Avaliable: ", ccb.Available);
-                            bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
-                        }
-                        Console.WriteLine("Number of days stayed: ",daysDiff);
-                        count++;
+                        Console.WriteLine("[Press any key to proceed with payment]");
+                        Console.ReadKey();
                     }
-                    Console.WriteLine("[Press any key to proceed with payment]");
-                    Console.ReadKey();
                 }
+            }
+            catch
+            {
+                Console.WriteLine("Unable to Discharge or Settle payments");
             }
         }
         static void RegisterPatient(List<Patient> pList)
