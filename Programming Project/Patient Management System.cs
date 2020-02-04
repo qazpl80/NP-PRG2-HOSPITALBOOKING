@@ -83,7 +83,7 @@ namespace Programming_Project
                     {
                         if (p.Id == pid)
                         {
-                            Console.WriteLine("PAtient found: {0}", p.Name);
+                            Console.WriteLine("Patient found: {0}", p.Name);
                             DisplayMedicalRecord(p);
                             break;
                         }
@@ -96,6 +96,7 @@ namespace Programming_Project
                 else if (i.Equals("10"))
                 {
                     Console.WriteLine("Option 10. Discharge and payment");
+                    DisplayPatientsM(patientsList);
                 }
                 else if (i.Equals("11"))
                 {
@@ -284,7 +285,7 @@ namespace Programming_Project
             Console.WriteLine("Status: {0}", p.Status);
             Console.WriteLine("\n======Stay ======");
             Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
-            Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
+            //Console.WriteLine("Discharge Date: {0}", p.Stay.DischargedDate);
 
             int counter = 1;
             foreach (MedicalRecord mr in p.Stay.MedicalRecordList)
@@ -295,6 +296,35 @@ namespace Programming_Project
                 Console.WriteLine("Diagnosis: ", mr.Diagnosis);
                 counter++;
 
+            }
+        }
+        static void dischargepayment(List<Patient> patientsList,List<Bed> bedsList)
+        {
+            Console.Write("Enter patient ID number: ");
+            string pid = Console.ReadLine();
+            Console.Write("Date of discharge (DD/MM/YYYY): ");
+            string dod = Console.ReadLine();
+            foreach (Patient p in patientsList)
+            {
+                if (p.Id == pid)
+                {
+                    Console.WriteLine("Name of patient: {0}", p.Name);
+                    Console.WriteLine("ID number: {0}", p.Id);
+                    Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+                    Console.WriteLine("Gender: {0}", p.Gender);
+                    Console.WriteLine("Status: {0}", p.Status);
+                    Console.WriteLine("\n======Stay ======");
+                    Console.WriteLine("Admission Date: {0}", p.Stay.AdmittedDate);
+                    Console.WriteLine("Discharge Date: {0}", dod);
+                    int count = 1;
+                    p.Stay.IsPaid = false;
+                    foreach (Bed b in bedsList)
+                    {
+                        Console.WriteLine("\n======Bed # {0} ======");
+
+                        
+                    }
+                }
             }
         }
         static void RegisterPatient(List<Patient> pList)
@@ -329,7 +359,7 @@ namespace Programming_Project
                         double balance = Convert.ToDouble(Console.ReadLine());
                         Patient c1 = new Child(Idn, name, age, gender, citizenship, "Registered", balance);
                         pList.Add(c1);
-                       patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + balance;
+                        patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + balance;
                        
                     }
                     //if child is not SC , no cdabalance
@@ -518,7 +548,7 @@ namespace Programming_Project
             string Patientid = Console.ReadLine();
             // loop through the list and see if there a match
 
-            searchPatient(nList, Patientid);
+            Patient pat = searchPatient(nList, Patientid);
             DisplayBeds(bList);
             Stay NewStay = new Stay();
             Console.Write("\nSelect bed to stay: ");
@@ -528,98 +558,181 @@ namespace Programming_Project
             string[] cal = Date.Split('/');
             DateTime Dates = new DateTime(Convert.ToInt32(cal[2]), Convert.ToInt32(cal[1]), Convert.ToInt32(cal[0]));
             BedStay newbedStay = new BedStay();
-            for (int b = 0; b < bList.Count; b++)
+
+            Bed b = bList[bednum - 1];
+            if (b.Available != false)
             {
-                if (bednum - 1 == b)
+                if (b is ClassABed)
                 {
-                    if (bList[b].Available != false)
+                    ClassABed bl = (ClassABed)b;
+                    Console.Write("Any accompanying guest?(Additional $100 per day)[Y/N]: ");
+                    string answer = Console.ReadLine().ToUpper();
+                    if (answer == "Y")
+                    {
+                        bl.AccompanyingPerson = true;
+                        newbedStay = new BedStay(Dates, bl);
+                    }
+                    else if (answer == "N")
                     {
 
-                        if (bList[b] is ClassABed)
-                        {
-                            ClassABed bl = (ClassABed)bList[b];
-                            Console.Write("Any accompanying guest?(Additional $100 per day)[Y/N]: ");
-                            string answer = Console.ReadLine().ToUpper();
-                            if (answer == "Y")
-                            {
-                                bl.AccompanyingPerson = true;
-                                newbedStay = new BedStay(Dates, bl);
-                            }
-                            else if (answer == "N")
-                            {
+                        bl.AccompanyingPerson = false;
+                        newbedStay = new BedStay(Dates, bl);
+                    }
+                    else
+                        Console.WriteLine("Incorrect Input, Please Try again...");
+                }
+                else if (b is ClassBBed)
+                {
+                    ClassBBed bb = (ClassBBed)b;
+                    Console.Write("Is AirCon needed? [Y/N]: ");
+                    string answer = Console.ReadLine().ToUpper();
+                    if (answer == "Y")
+                    {
+                        bb.AirCon = true;
+                        newbedStay = new BedStay(Dates, bb);
 
-                                bl.AccompanyingPerson = false;
-                                newbedStay = new BedStay(Dates, bl);
-                            }
-                            else
-                                Console.WriteLine("Incorrect Input, Please Try again...");
-                        }
-                        else if (bList[b] is ClassBBed)
-                        {
-                            ClassBBed bb = (ClassBBed)bList[b];
-                            Console.Write("Is AirCon needed? [Y/N]: ");
-                            string answer = Console.ReadLine().ToUpper();
-                            if (answer == "Y")
-                            {
-                                bb.AirCon = true;
-                                newbedStay = new BedStay(Dates, bb);
-
-                            }
-                            else if (answer == "N")
-                            {
-                                bb.AirCon = false;
-                                newbedStay = new BedStay(Dates, bb);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Incorrect Input, Please Try again...");
-
-                            }
-                        }
-                        else
-                        {
-                            ClassCBed bc = (ClassCBed)bList[b];
-                            Console.Write("Is a portable TV required? [Y/N]: ");
-                            string answer = Console.ReadLine().ToUpper();
-                            if (answer == "Y")
-                            {
-                                bc.PortableTv = true;
-                                newbedStay = new BedStay(Dates, bc);
-
-                            }
-                            else if (answer == "N")
-                            {
-                                bc.PortableTv = false;
-                                newbedStay = new BedStay(Dates, bc);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Incorrect Input, Please Try again...");
-
-                            }
-                        }
-                        foreach (Patient n in nList)
-                        {
-                            if (n.Id == Patientid)
-                            {
-
-                                NewStay = new Stay(Dates,n);
-
-                                NewStay.AddBedstay(newbedStay);
-                                n.Status = "Admitted";
-
-                            }
-                        }
-                        Console.WriteLine("\n\nStay registration successful!\n");
-
+                    }
+                    else if (answer == "N")
+                    {
+                        bb.AirCon = false;
+                        newbedStay = new BedStay(Dates, bb);
                     }
                     else
                     {
-                        Console.WriteLine("Bed does not exist..");
-                        Console.WriteLine("Stay registration unsucessful\n");
+                        Console.WriteLine("Incorrect Input, Please Try again...");
+
                     }
                 }
+                else
+                {
+                    ClassCBed bc = (ClassCBed)b;
+                    Console.Write("Is a portable TV required? [Y/N]: ");
+                    string answer = Console.ReadLine().ToUpper();
+                    if (answer == "Y")
+                    {
+                        bc.PortableTv = true;
+                        newbedStay = new BedStay(Dates, bc);
+
+                    }
+                    else if (answer == "N")
+                    {
+                        bc.PortableTv = false;
+                        newbedStay = new BedStay(Dates, bc);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incorrect Input, Please Try again...");
+
+                    }
+                    pat.Status = "Admitted";
+                    pat.Stay.AddBedstay(newbedStay);
+                    //foreach (Patient n in nList)
+                    //{
+                    //    if (n.Id == Patientid)
+                    //    {
+
+                    //        NewStay = new Stay(Dates, n);
+
+                    //        NewStay.AddBedstay(newbedStay);
+                    //        n.Status = "Admitted";
+
+                    //    }
+                    //}
+                    Console.WriteLine("\n\nStay registration successful!\n");
+                }
             }
+            //for (int i = 0; i < bList.Count; i++)
+            //{
+            //    if (bednum - 1 == i)
+            //    {
+            //        if (bList[b].Available != false)
+            //        {
+
+            //            if (bList[b] is ClassABed)
+            //            {
+            //                ClassABed bl = (ClassABed)bList[b];
+            //                Console.Write("Any accompanying guest?(Additional $100 per day)[Y/N]: ");
+            //                string answer = Console.ReadLine().ToUpper();
+            //                if (answer == "Y")
+            //                {
+            //                    bl.AccompanyingPerson = true;
+            //                    newbedStay = new BedStay(Dates, bl);
+            //                }
+            //                else if (answer == "N")
+            //                {
+
+            //                    bl.AccompanyingPerson = false;
+            //                    newbedStay = new BedStay(Dates, bl);
+            //                }
+            //                else
+            //                    Console.WriteLine("Incorrect Input, Please Try again...");
+            //            }
+            //            else if (bList[b] is ClassBBed)
+            //            {
+            //                ClassBBed bb = (ClassBBed)bList[b];
+            //                Console.Write("Is AirCon needed? [Y/N]: ");
+            //                string answer = Console.ReadLine().ToUpper();
+            //                if (answer == "Y")
+            //                {
+            //                    bb.AirCon = true;
+            //                    newbedStay = new BedStay(Dates, bb);
+
+            //                }
+            //                else if (answer == "N")
+            //                {
+            //                    bb.AirCon = false;
+            //                    newbedStay = new BedStay(Dates, bb);
+            //                }
+            //                else
+            //                {
+            //                    Console.WriteLine("Incorrect Input, Please Try again...");
+
+            //                }
+            //            }
+            //            else
+            //            {
+            //                ClassCBed bc = (ClassCBed)bList[b];
+            //                Console.Write("Is a portable TV required? [Y/N]: ");
+            //                string answer = Console.ReadLine().ToUpper();
+            //                if (answer == "Y")
+            //                {
+            //                    bc.PortableTv = true;
+            //                    newbedStay = new BedStay(Dates, bc);
+
+            //                }
+            //                else if (answer == "N")
+            //                {
+            //                    bc.PortableTv = false;
+            //                    newbedStay = new BedStay(Dates, bc);
+            //                }
+            //                else
+            //                {
+            //                    Console.WriteLine("Incorrect Input, Please Try again...");
+
+            //                }
+            //            }
+            //            foreach (Patient n in nList)
+            //            {
+            //                if (n.Id == Patientid)
+            //                {
+
+            //                    NewStay = new Stay(Dates,n);
+
+            //                    NewStay.AddBedstay(newbedStay);
+            //                    n.Status = "Admitted";
+
+            //                }
+            //            }
+            //            Console.WriteLine("\n\nStay registration successful!\n");
+
+            //        }
+            //        else
+            //        {
+            //            Console.WriteLine("Bed does not exist..");
+            //            Console.WriteLine("Stay registration unsucessful\n");
+            //        }
+            //    }
+            //}
         }
     }
 }
