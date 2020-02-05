@@ -374,32 +374,33 @@ namespace Programming_Project
                         int count = 1;
                         foreach (BedStay bs in p.Stay.BedstayList)
                         {
-                            int daysDiff = ((TimeSpan)(bs.EndBedstay - bs.StartBedstay)).Days;
+                            DateTime endstaydate = Convert.ToDateTime(bs.EndBedstay);
+                            int daysDiff = Convert.ToInt32(bs.StartBedstay.Day - endstaydate.Day);
                             Console.WriteLine("\n======Bed # {0} ======", count);
                             Console.WriteLine("Ward number: {0}", bs.Bed.WardNo);
                             Console.WriteLine("Bed number: {0}", bs.Bed.BedNo);
                             Console.WriteLine("Ward Class: {0}", "A");
-                            //Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
-                            //Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
+                            Console.WriteLine("Start of bed stay: {0}", bs.StartBedstay);
+                            Console.WriteLine("End of bed stay: {0}", bs.EndBedstay);
                             if (bs.Bed is ClassABed)
                             {
                                 ClassABed cab = (ClassABed)bs.Bed;
-                                Console.WriteLine("Accompanying Person: ", cab.AccompanyingPerson);
+                                Console.WriteLine("Accompanying Person: {0}", cab.AccompanyingPerson);
                                 bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
                             }
                             else if (bs.Bed is ClassBBed)
                             {
                                 ClassBBed cbb = (ClassBBed)bs.Bed;
-                                Console.WriteLine("AirCon: ", cbb.AirCon);
+                                Console.WriteLine("AirCon: {0}", cbb.AirCon);
                                 bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
                             }
                             else if (bs.Bed is ClassCBed)
                             {
                                 ClassCBed ccb = (ClassCBed)bs.Bed;
-                                Console.WriteLine("Avaliable: ", ccb.Available);
+                                Console.WriteLine("Avaliable: {0}", ccb.Available);
                                 bs.Bed.CalculateCharges(p.CitizenStatus, daysDiff);
                             }
-                            Console.WriteLine("Number of days stayed: ", daysDiff);
+                            Console.WriteLine("Number of days stayed: {0}", daysDiff);
                             count++;
                         }
                         Console.WriteLine("[Press any key to proceed with payment]");
@@ -408,7 +409,7 @@ namespace Programming_Project
                         if (p is Child)
                         {
                             Child ch = (Child)p;
-                            Console.WriteLine("{0} has been deducted from CDA",ch.CdaBalance);
+                            Console.WriteLine("${0} has been deducted from CDA",ch.CdaBalance);
                             double chcost = ch.CalculateCharges();
                             if (ch.CdaBalance > chcost)
                             {
@@ -445,7 +446,7 @@ namespace Programming_Project
                         else if (p is Adult)
                         {
                             Adult ad = (Adult)p;
-                            Console.WriteLine("{0} has been deducted from Medisave", ad.MedisaveBalance);
+                            Console.WriteLine("${0} has been deducted from Medisave", ad.MedisaveBalance);
                             double adcost = ad.CalculateCharges();
                             if (ad.MedisaveBalance > adcost)
                             {
@@ -554,15 +555,11 @@ namespace Programming_Project
                             Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", medisave);
                             pList.Add(a1);
                             patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + medisave;
-
-
-
                         }
                         else
                         {
                             Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", 0);
                             pList.Add(a1);
-
 
                             patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
 
@@ -573,13 +570,11 @@ namespace Programming_Project
                         Patient s1 = new Senior(Idn, name, age, gender, citizenship, "Registered");
                         pList.Add(s1);
 
-
                         patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
 
                     }
                     file.WriteLine(patientdeets);
                     Console.WriteLine("{0} is registered successfully", name);
-
                 }
             }
             catch
@@ -645,7 +640,6 @@ namespace Programming_Project
                     Console.WriteLine("Bed added successfully.");
                 }
             }
-
         }
         static void retrievePatient(List<Patient> pList, List<Bed> bList)
         {
@@ -699,7 +693,6 @@ namespace Programming_Project
 
             Console.Write("Enter patient ID number: ");
             string Patientid = Console.ReadLine().ToUpper();
-
 
             DisplayBeds(bList);
             Console.Write("\nSelect bed to stay: ");
@@ -770,7 +763,6 @@ namespace Programming_Project
                     {
                         bc.PortableTv = true;
                         newbedStay = new BedStay(Dates, bc);
-
                     }
                     else if (answer == "N")
                     {
@@ -780,7 +772,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 foreach (Patient p in pList)
@@ -791,7 +782,6 @@ namespace Programming_Project
                         NewStay.AddBedstay(newbedStay);
                         p.Stay = NewStay;
                         p.Status = "Admitted";
-
                     }
                 }
                 b.Available = false;
@@ -841,7 +831,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 else if (N is ClassBBed)
@@ -853,7 +842,6 @@ namespace Programming_Project
                     {
                         bb.AirCon = true;
                         bedStay = new BedStay(Transfer, bb);
-
                     }
                     else if (answer == "N")
                     {
@@ -863,7 +851,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 else
@@ -885,7 +872,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 foreach (Patient p in pList)
