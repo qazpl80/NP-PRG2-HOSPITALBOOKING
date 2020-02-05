@@ -33,88 +33,96 @@ namespace Programming_Project
             while (!i.Equals("0"))
             {
                 DisplayMenu();
-                Console.Write("Enter your option: ");
-                i = Console.ReadLine();
-                if (i.Equals("1"))
+                try
                 {
-                    Console.WriteLine("Option 1. View All Patients");
-                    DisplayPatients(patientsList);
-                }
-                else if (i.Equals("2"))
-                {
-                    Console.WriteLine("Option 2. View All Beds");
-                    DisplayBeds(bedsList);
-                }
-                else if (i.Equals("3"))
-                {
-                    Console.WriteLine("Option 3. Register Patient");
-                    RegisterPatient(patientsList);
-
-                }
-                else if (i.Equals("4"))
-                {
-                    Console.WriteLine("Option 4. Add new bed");
-                    Addnewbed(bedsList);
-                }
-                else if (i.Equals("5"))
-                {
-                    Console.WriteLine("Option 5. Register hospital stay");
-
-                    RegisterHospitalStay(patientsList, bedsList);
-
-
-                }
-                else if (i.Equals("6"))
-                {
-                    Console.WriteLine("Option 6. Retrieve Patient");
-                    retrievePatient(patientsList, bedsList);
-                }
-                else if (i.Equals("7"))
-                {
-                    Console.WriteLine("Option 7. Add Medical Record Entry");
-                    DisplayPatientsM(patientsList);
-                    AddMedicalRecord(patientsList);
-                }
-                else if (i.Equals("8"))
-                {
-                    Console.WriteLine("Option 8. View medical records");
-                    DisplayPatientsM(patientsList);
-                    Console.Write("Enter patient ID number: ");
-                    string pid = Console.ReadLine();
-                    foreach (Patient p in patientsList)
+                    Console.Write("Enter your option: ");
+                    i = Console.ReadLine();
+                    if (i.Equals("1"))
                     {
-                        if (p.Id == pid)
+                        Console.WriteLine("Option 1. View All Patients");
+                        DisplayPatients(patientsList);
+                    }
+                    else if (i.Equals("2"))
+                    {
+                        Console.WriteLine("Option 2. View All Beds");
+                        DisplayBeds(bedsList);
+                    }
+                    else if (i.Equals("3"))
+                    {
+                        Console.WriteLine("Option 3. Register Patient");
+              
+                        RegisterPatient(patientsList);
+
+                    }
+                    else if (i.Equals("4"))
+                    {
+                        Console.WriteLine("Option 4. Add new bed");
+                        Addnewbed(bedsList);
+                    }
+                    else if (i.Equals("5"))
+                    {
+                        Console.WriteLine("Option 5. Register hospital stay");
+
+                        RegisterHospitalStay(patientsList, bedsList);
+
+
+                    }
+                    else if (i.Equals("6"))
+                    {
+                        Console.WriteLine("Option 6. Retrieve Patient");
+                        retrievePatient(patientsList, bedsList);
+                    }
+                    else if (i.Equals("7"))
+                    {
+                        Console.WriteLine("Option 7. Add Medical Record Entry");
+                        DisplayPatientsM(patientsList);
+                        AddMedicalRecord(patientsList);
+                    }
+                    else if (i.Equals("8"))
+                    {
+                        Console.WriteLine("Option 8. View medical records");
+                        DisplayPatientsM(patientsList);
+                        Console.Write("Enter patient ID number: ");
+                        string pid = Console.ReadLine().ToUpper();
+                        foreach (Patient p in patientsList)
                         {
-                            DisplayMedicalRecord(p);
-                            break;
+                            if (p.Id == pid)
+                            {
+                                DisplayMedicalRecord(p);
+                                break;
+                            }
                         }
                     }
+                    else if (i.Equals("9"))
+                    {
+                        Console.WriteLine("Option 9.Transfer Patient to Another Bed");
+                        TransferPatient(patientsList, bedsList);
+                    }
+                    else if (i.Equals("10"))
+                    {
+                        Console.WriteLine("Option 10. Discharge and payment");
+                        DisplayPatientsM(patientsList);
+                        Dischargepayment(patientsList);
+                    }
+                    else if (i.Equals("11"))
+                    {
+                        Console.WriteLine("Option 11. Display currencies exchange rate");
+                        Currency();
+                    }
+                    else if (i.Equals("12"))
+                    {
+                        Console.WriteLine("Option 12. Display PM 2.5 information");
+                        //ADVANCE FEATURES
+                        APIPM();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Option, Please Try Again.");
+                    }
                 }
-                else if (i.Equals("9"))
+                catch
                 {
-                    Console.WriteLine("Option 9.Transfer Patient to Another Bed");
-                    TransferPatient(patientsList, bedsList);
-                }
-                else if (i.Equals("10"))
-                {
-                    Console.WriteLine("Option 10. Discharge and payment");
-                    DisplayPatientsM(patientsList);
-                    Dischargepayment(patientsList);
-                }
-                else if (i.Equals("11"))
-                {
-                    Console.WriteLine("Option 11. Display currencies exchange rate");
-                    Currency();
-                }
-                else if (i.Equals("12"))
-                {
-                    Console.WriteLine("Option 12. Display PM 2.5 information");
-                    //ADVANCE FEATURES
-                    APIPM();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Option, Please Try Again.");
+                    Console.WriteLine("Invalid please try again.");
                 }
             }
         }
@@ -284,7 +292,7 @@ namespace Programming_Project
             try
             {
                 Console.Write("Enter patient ID number: ");
-                string pid = Console.ReadLine();
+                string pid = Console.ReadLine().ToUpper();
                 Console.Write("\n Patient temperature: ");
                 double ptm = Convert.ToDouble(Console.ReadLine());
                 Console.Write("Please enter patient observation: ");
@@ -345,7 +353,7 @@ namespace Programming_Project
             try
             {
                 Console.Write("Enter patient ID number: ");
-                string pid = Console.ReadLine();
+                string pid = Console.ReadLine().ToUpper();
                 Console.Write("Date of discharge (DD/MM/YYYY): ");
                 string dod1 = Console.ReadLine();
                 DateTime dod = Convert.ToDateTime(dod1);
@@ -501,7 +509,7 @@ namespace Programming_Project
             string name = Console.ReadLine();
 
             Console.Write("Enter Identification Number: ");
-            string Idn = Console.ReadLine();
+            string Idn = Console.ReadLine().ToUpper();
             Console.Write("Enter Age: ");
             int age = 0;
             try
@@ -513,6 +521,7 @@ namespace Programming_Project
                 char gender = Convert.ToChar(Console.ReadLine().ToUpper());
                 Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
                 string citizenship = Console.ReadLine();
+            
                 using (StreamWriter file = new StreamWriter("patients(1).csv", true))
                 {
                     if (age <= 12)
@@ -643,7 +652,8 @@ namespace Programming_Project
             string wardClass = "";
             DisplayPatients(pList);
             Console.Write("Enter patient ID Number: ");
-            string id = Console.ReadLine();
+           
+            string id = Console.ReadLine().ToUpper();
             foreach (Patient p in pList)
             {
                 if (p.Id == id)
@@ -688,7 +698,7 @@ namespace Programming_Project
             DisplayPatientsRetrieve(pList);
 
             Console.Write("Enter patient ID number: ");
-            string Patientid = Console.ReadLine();
+            string Patientid = Console.ReadLine().ToUpper();
 
 
             DisplayBeds(bList);
@@ -926,7 +936,7 @@ namespace Programming_Project
             {
                 client.BaseAddress = new Uri("https://api.exchangerate-api.com/");
                 //HTTP GET
-                Task<HttpResponseMessage> responseTask = client.GetAsync("/v1/latest/SGD");
+                Task<HttpResponseMessage> responseTask = client.GetAsync("/v4/latest/SGD");
                 responseTask.Wait();
                 HttpResponseMessage result = responseTask.Result;
                 //if successful, read string and print
@@ -936,12 +946,68 @@ namespace Programming_Project
                     readTask.Wait();
 
                     string info = readTask.Result;
-                   
+                    Currency exchange = JsonConvert.DeserializeObject<Currency>(info);
+                    
 
                     // header
                     Console.WriteLine("\n============================3.1 Display currencies exchange rate=================================\n");
                     Console.WriteLine("Base: Singaporea Dollars(SGD)");
                     //Console.WriteLine("Date: ",objectt)
+                    Console.WriteLine("Date: " + exchange.TimeStamp.ToString("dd/MM/yyyy"));
+                    Console.WriteLine("Time Last Updated: "+ exchange.Time_latest_updated.ToString("dd/MM/yyyy"));
+                    Console.WriteLine("Rates: ");
+                    Console.WriteLine("\tUAE Dirham: " + exchange.rates.AED);
+                    Console.WriteLine("\tArgentine Peso: " + exchange.rates.ARS);
+                    Console.WriteLine("\tAustralian Dollar: " + exchange.rates.AUD);
+                    Console.WriteLine("\tBulgarian Lev: " + exchange.rates.BGN);
+                    Console.WriteLine("\tBrazilian Real: " + exchange.rates.BRL);
+                    Console.WriteLine("\tBahamian Dollar: " + exchange.rates.BSD);
+                    Console.WriteLine("\tCanadian Dollar: " + exchange.rates.CAD);
+                    Console.WriteLine("\tSwiss Franc: " + exchange.rates.CHF);
+                    Console.WriteLine("\tChilean Peso: " + exchange.rates.CLP);
+                    Console.WriteLine("\tChinese Renminbi: " + exchange.rates.CNY);
+                    Console.WriteLine("\tColombian Peso: " + exchange.rates.COP);
+                    Console.WriteLine("\tCzech Koruna: " + exchange.rates.CZK);
+                    Console.WriteLine("\tDanish Krone: " + exchange.rates.DKK);
+                    Console.WriteLine("\tDominican Peso: " + exchange.rates.DOP);
+                    Console.WriteLine("\tEgyptian Pound: " + exchange.rates.EGP);
+                    Console.WriteLine("\tEuro: " + exchange.rates.EUR);
+                    Console.WriteLine("\tFiji Dollar: " + exchange.rates.FJD);
+                    Console.WriteLine("\tPound Sterling: " + exchange.rates.GBP);
+                    Console.WriteLine("\tGuatemalan Quetzal: " + exchange.rates.GTQ);
+                    Console.WriteLine("\tHong Kong Dollar:" + exchange.rates.HKD);
+                    Console.WriteLine("\tCroatian Kuna: " + exchange.rates.HRK);
+                    Console.WriteLine("\tHungarian Forint: " + exchange.rates.HUF);
+                    Console.WriteLine("\tIndonesian Rupiah: " + exchange.rates.IDR);
+                    Console.WriteLine("\tIsraeli Shekel: " + exchange.rates.ILS);
+                    Console.WriteLine("\tIndian Rupee: " + exchange.rates.INR);
+                    Console.WriteLine("\tIcelandic Krona: " + exchange.rates.ISK);
+                    Console.WriteLine("\tJapanese Yen: " + exchange.rates.JPY);
+                    Console.WriteLine("\tSouth Korean Won: " + exchange.rates.KRW);
+                    Console.WriteLine("\tKazakhstani Tenge: " + exchange.rates.KZT);
+                    Console.WriteLine("\tMexican Peso: " + exchange.rates.MXN);
+                    Console.WriteLine("\tMalaysian Ringgit: " + exchange.rates.MYR);
+                    Console.WriteLine("\tNorwegian Krone: " + exchange.rates.NOK);
+                    Console.WriteLine("\tNew Zealand Dollar: " + exchange.rates.NZD);
+                    Console.WriteLine("\tPanamanian Balboa: " + exchange.rates.PAB);
+                    Console.WriteLine("\tPeruvian Nuevo Sol: " + exchange.rates.PEN);
+                    Console.WriteLine("\tPhilippine Peso: " + exchange.rates.PHP);
+                    Console.WriteLine("\tPakistani Rupee: " + exchange.rates.PKR);
+                    Console.WriteLine("\tPolish Zloty: " + exchange.rates.PLN);
+                    Console.WriteLine("\tParaguayan Guarani: " + exchange.rates.PYG);
+                    Console.WriteLine("\tRomanian Leu: " + exchange.rates.RON);
+                    Console.WriteLine("\tRussian Ruble: " + exchange.rates.RUB);
+                    Console.WriteLine("\tSaudi Riyal: " + exchange.rates.SAR);
+                    Console.WriteLine("\tSwedish Krona: " + exchange.rates.SEK);
+                    Console.WriteLine("\tSingapore Dollar: " + exchange.rates.SGD);
+                    Console.WriteLine("\tThai Baht: " + exchange.rates.THB);
+                    Console.WriteLine("\tTurkish Lira: " + exchange.rates.TRY);
+                    Console.WriteLine("\tNew Taiwan Dollar: " + exchange.rates.TWD);
+                    Console.WriteLine("\tUkrainian Hryvnia: " + exchange.rates.UAH);
+                    Console.WriteLine("\tUS Dollar: " + exchange.rates.USD);
+                    Console.WriteLine("\tUruguayan Peso: " + exchange.rates.UYU);
+                    Console.WriteLine("\tSouth African Rand: " + exchange.rates.ZAR);
+                   
 
                 }
 
