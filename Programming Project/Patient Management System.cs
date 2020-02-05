@@ -546,15 +546,11 @@ namespace Programming_Project
                             Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", medisave);
                             pList.Add(a1);
                             patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship + "," + medisave;
-
-
-
                         }
                         else
                         {
                             Patient a1 = new Adult(Idn, name, age, gender, citizenship, "Registered", 0);
                             pList.Add(a1);
-
 
                             patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
 
@@ -565,13 +561,11 @@ namespace Programming_Project
                         Patient s1 = new Senior(Idn, name, age, gender, citizenship, "Registered");
                         pList.Add(s1);
 
-
                         patientdeets = name + "," + Idn + "," + age + "," + gender + "," + citizenship;
 
                     }
                     file.WriteLine(patientdeets);
                     Console.WriteLine("{0} is registered successfully", name);
-
                 }
             }
             catch
@@ -637,7 +631,6 @@ namespace Programming_Project
                     Console.WriteLine("Bed added successfully.");
                 }
             }
-
         }
         static void retrievePatient(List<Patient> pList, List<Bed> bList)
         {
@@ -690,7 +683,6 @@ namespace Programming_Project
 
             Console.Write("Enter patient ID number: ");
             string Patientid = Console.ReadLine();
-
 
             DisplayBeds(bList);
             Console.Write("\nSelect bed to stay: ");
@@ -761,7 +753,6 @@ namespace Programming_Project
                     {
                         bc.PortableTv = true;
                         newbedStay = new BedStay(Dates, bc);
-
                     }
                     else if (answer == "N")
                     {
@@ -771,7 +762,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 foreach (Patient p in pList)
@@ -782,7 +772,6 @@ namespace Programming_Project
                         NewStay.AddBedstay(newbedStay);
                         p.Stay = NewStay;
                         p.Status = "Admitted";
-
                     }
                 }
                 b.Available = false;
@@ -832,7 +821,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 else if (N is ClassBBed)
@@ -844,7 +832,6 @@ namespace Programming_Project
                     {
                         bb.AirCon = true;
                         bedStay = new BedStay(Transfer, bb);
-
                     }
                     else if (answer == "N")
                     {
@@ -854,7 +841,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 else
@@ -876,7 +862,6 @@ namespace Programming_Project
                     else
                     {
                         Console.WriteLine("Incorrect Input, Please Try again...");
-
                     }
                 }
                 foreach (Patient p in pList)
